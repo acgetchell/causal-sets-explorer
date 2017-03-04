@@ -27,3 +27,11 @@
 *.exe
 *.out
 *.app
+
+# Project files
+.idea
+build/
+
+# MacOS cruft
+*.DS_Store
+
