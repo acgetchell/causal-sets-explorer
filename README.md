@@ -1,5 +1,7 @@
 # causal-sets-explorer
-Causal sets
+[![Build Status](https://travis-ci.org/acgetchell/causal-sets-explorer.svg?branch=master)](https://travis-ci.org/acgetchell/causal-sets-explorer)
+
+[Causal set][3] explorer performs graph-theoretic calculations on Causal sets.
 
 ## Initial Set Up
 This project uses the [Conan C/C++ package manager][1]. To get started on MacOS,
@@ -32,3 +34,4 @@ Before re-running `conan install`.
 
 [1]: https://www.conan.io
 [2]: https://github.com/conan-io/conan/issues/1067#issuecomment-284219916
+[3]: https://en.wikipedia.org/wiki/Causal_sets
