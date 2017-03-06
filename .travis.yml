@@ -1,17 +1,28 @@
 language: cpp
 
-os: osx
-
-osx_image: xcode8.2
+matrix:
+  include:
+    - os: osx
+      osx_image: xcode8.2
 
 before_install:
-  - brew update
+# Workaround for https://github.com/travis-ci/travis-ci/issues/6307
+  - |
+    if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+      gpg2 --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
+      rvm get stable --auto-dotfiles
+      brew update
+    fi
 
 install:
-  - brew unlink cmake
-  - brew upgrade cmake
-  - brew install conan
-  - brew install ninja
+  - if [[ "${COMPILER}" != "" ]]; then export CXX=${COMPILER}; fi
+  - |
+    if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+      brew unlink cmake
+      brew upgrade cmake
+      brew install ninja
+      brew install conan
+    fi
   - cmake --version
 
 script:
