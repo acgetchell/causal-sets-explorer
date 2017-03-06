@@ -8,3 +8,4 @@ set(CMAKE_CXX_STANDARD 14)
 
 set(SOURCE_FILES src/main.cpp)
 add_executable(causal_sets_explorer ${SOURCE_FILES})
+target_link_libraries(causal_sets_explorer ${CONAN_LIBS})
