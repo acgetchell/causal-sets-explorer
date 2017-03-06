@@ -1,9 +1,8 @@
-language: cpp
-
 matrix:
   include:
     - os: osx
       osx_image: xcode8.2
+      language: generic
 
 before_install:
 # Workaround for https://github.com/travis-ci/travis-ci/issues/6307
