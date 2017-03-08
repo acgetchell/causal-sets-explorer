@@ -8,6 +8,9 @@ This project uses the [Conan C/C++ package manager][1]. To get started on MacOS,
 for example, do:
 
 ~~~
+brew install conan
+git clone https://github.com/acgetchell/causal-sets-explorer.git
+cd causal-sets-explorer
 mkdir build && cd build
 conan install .. -s compiler=apple-clang -s compiler.version=8.0 -s compiler.libcxx=libc++ --build=missing
 cmake -G Ninja -DCMAKE_BUILD_TYPE=Release
