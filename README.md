@@ -4,7 +4,7 @@
 [Causal set][3] explorer performs graph-theoretic calculations on Causal sets.
 
 ## Initial Set Up
-This project uses the [Conan C/C++ package manager][1]. To get started on MacOS,
+This project uses the [Conan C/C++ package manager][1]. To get started on MacOS using [Homebrew][4],
 for example, do:
 
 ~~~
@@ -38,3 +38,4 @@ Before re-running `conan install`.
 [1]: https://www.conan.io
 [2]: https://github.com/conan-io/conan/issues/1067#issuecomment-284219916
 [3]: https://en.wikipedia.org/wiki/Causal_sets
+[4]: https://brew.sh/
