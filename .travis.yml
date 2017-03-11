@@ -52,7 +52,7 @@ before_install:
     fi
 
 install:
-#  - if [[ "${COMPILER}" != "" ]]; then export CXX=${COMPILER}; fi
+  - if [[ "${COMPILER}" != "" ]]; then export CXX=${COMPILER}; fi
   - |
     if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
       brew unlink cmake
