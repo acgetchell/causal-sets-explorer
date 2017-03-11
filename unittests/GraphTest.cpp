@@ -10,14 +10,17 @@
 using Graph = boost::adjacency_list<>;
 using SWGen = boost::small_world_iterator<boost::minstd_rand, Graph>;
 
-TEST(GraphTest, NotNull) {
-//  boost::minstd_rand gen;
-//  // Create graph with 100 nodes
-//  Graph g{SWGen(gen, 100, 6, 0.03), SWGen(), 100};
-//
-//  // Write
-//  //  boost::dynamic_properties dp;
-//  //  write_graphml(std::cout, g, dp, true);
-//  write_graphviz(std::cout, g);
-  ASSERT_NE(1, 2) << "Graph not instantiated.";
+class GraphTest : public ::testing::Test {
+ public:
+  GraphTest() {
+    boost::minstd_rand generator;
+    graph_ = Graph(SWGen(generator, 100, 6, 0.03), SWGen(), 100);
+  }
+
+  Graph graph_;
+};
+
+TEST_F(GraphTest, IsDirected) {
+  ASSERT_TRUE(boost::is_directed(graph_)) << "Graph not directed.";
 }
+

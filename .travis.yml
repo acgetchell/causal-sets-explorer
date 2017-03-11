@@ -32,3 +32,4 @@ script:
 
 after_script:
   - (cd bin && ./causal_sets_explorer)
+  - (cd bin && ./unittests)
