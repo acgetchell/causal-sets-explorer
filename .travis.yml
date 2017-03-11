@@ -10,7 +10,7 @@ addons:
       - lldb-3.9
     sources: &sources
       - ubuntu-toolchain-r-test
-      - llvm-toolchain-trusty-main
+      - llvm-toolchain-trusty-3.9
 
 matrix:
   include:
