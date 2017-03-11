@@ -16,6 +16,7 @@ matrix:
       language: generic
 #      env: COMPILER=apple-clang VERSION=8.0 LIB=libc++
 
+  allow_failures:
     # gcc
     - os: linux
       dist: trusty
