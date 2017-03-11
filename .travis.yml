@@ -1,8 +1,23 @@
+language: cpp
+sudo: false
+
+addons:
+  apt:
+    packages:
+      - g++-6
+      - ninja-build
+    sources: &sources
+      - ubuntu-toolchain-r-test
+
 matrix:
   include:
     - os: osx
       osx_image: xcode8.2
       language: generic
+
+    # gcc
+    - os: linux
+      dist: trusty
 
 before_install:
 # Workaround for https://github.com/travis-ci/travis-ci/issues/6307
@@ -22,6 +37,9 @@ install:
       brew install ninja
       brew install conan
       CONAN_ARGS="-s compiler=apple-clang -s compiler.version=8.0 -s compiler.libcxx=libc++"
+    else
+      pip install conan
+      CONAN_ARGS="-s compiler=gcc -s compiler.version=6.3 -s compiler.libcxx=libstdc++"
     fi
   - cmake --version
 
