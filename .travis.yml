@@ -45,7 +45,7 @@ install:
 
 script:
   - mkdir build && cd build
-  - conan install .. $CONAN_ARGS --build=missing
+  - conan install .. ${CONAN_ARGS} --build=missing
   - cmake -G Ninja -DCMAKE_BUILD_TYPE=Release ..
   - cmake --build .
 
