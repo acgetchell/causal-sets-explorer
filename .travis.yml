@@ -1,6 +1,14 @@
 language: cpp
 sudo: false
 
+os:
+  - linux
+  - osx
+
+compiler:
+  - gcc
+  - clang
+
 addons:
   apt:
     packages:
@@ -25,9 +33,14 @@ matrix:
       compiler: clang
 
     # gcc
+#    - os: linux
+#      dist: trusty
+#      env: COMPILER=gcc VERSION=6.3 LIB=libstdc++
+
+  allow_failures:
     - os: linux
       dist: trusty
-#      env: COMPILER=gcc VERSION=6.3 LIB=libstdc++
+      compiler: gcc
 
 before_install:
 # Workaround for https://github.com/travis-ci/travis-ci/issues/6307
