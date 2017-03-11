@@ -1,5 +1,6 @@
 [requires]
 Boost/1.63.0@eliaskousk/stable
+gmock/1.8.0@meshell/stable
 
 [generators]
 cmake
