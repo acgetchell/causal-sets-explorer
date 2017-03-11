@@ -6,6 +6,8 @@ addons:
     packages:
       - g++-6
       - ninja-build
+      - clang-3.9
+      - lldb-3.9
     sources: &sources
       - ubuntu-toolchain-r-test
 
@@ -16,7 +18,11 @@ matrix:
       language: generic
 #      env: COMPILER=apple-clang VERSION=8.0 LIB=libc++
 
-  allow_failures:
+    # clang
+    - os: linux
+      dist: trusty
+      compiler: clang
+
     # gcc
     - os: linux
       dist: trusty
@@ -47,6 +53,7 @@ install:
     fi
   - cmake --version
   - if [[ "$CXX" = "g++" ]]; then export CXX="g++-6" CC="gcc-6"; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" && "$CXX" == "clang++" ]]; then export CXX="clang++-3.9" CC="clang-3.9"; fi
 
 script:
   - mkdir build && cd build
