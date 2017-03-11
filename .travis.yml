@@ -21,12 +21,13 @@ install:
       brew upgrade cmake
       brew install ninja
       brew install conan
+      CONAN_ARGS="compiler=apple-clang -s compiler.version=8.0 -s compiler.libcxx=libc++"
     fi
   - cmake --version
 
 script:
   - mkdir build && cd build
-  - conan install .. -s compiler=apple-clang -s compiler.version=8.0 -s compiler.libcxx=libc++ --build=missing
+  - conan install .. $CONAN_ARGS --build=missing
   - cmake -G Ninja -DCMAKE_BUILD_TYPE=Release ..
   - cmake --build .
 
