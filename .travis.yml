@@ -3,14 +3,6 @@ sudo: false
 dist: trusty
 osx_image: xcode8.2
 
-os:
-  - linux
-  - osx
-
-compiler:
-  - gcc
-  - clang
-
 addons:
   apt:
     packages:
@@ -22,24 +14,19 @@ addons:
       - ubuntu-toolchain-r-test
       - llvm-toolchain-trusty-3.9
 
+os:
+  - linux
+  - osx
+
+compiler:
+  - gcc
+  - clang
+
 matrix:
-#  include:
-#    - os: osx
-#      osx_image: xcode8.2
-#      language: generic
-##      env: COMPILER=apple-clang VERSION=8.0 LIB=libc++
-#
-#    # clang
-#    - os: linux
-#      dist: trusty
-#      compiler: clang
-#
-#    # gcc
-#    - os: linux
-#      dist: trusty
-#      env: COMPILER=gcc VERSION=6.3 LIB=libstdc++
   allow_failures:
     - os: linux
+      compiler: gcc
+    - os: osx
       compiler: gcc
 
 before_install:
@@ -52,7 +39,7 @@ before_install:
     fi
 
 install:
-  - if [[ "${COMPILER}" != "" ]]; then export CXX=${COMPILER}; fi
+#  - if [[ "${COMPILER}" != "" ]]; then export CXX=${COMPILER}; fi
   - |
     if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
       brew unlink cmake
