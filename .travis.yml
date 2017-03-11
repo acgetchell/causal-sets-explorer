@@ -14,10 +14,12 @@ matrix:
     - os: osx
       osx_image: xcode8.2
       language: generic
+      env: COMPILER=apple-clang VERSION=8.0 LIB=libc++
 
     # gcc
     - os: linux
       dist: trusty
+      env: COMPILER=gcc VERSION=6.3 LIB=libstdc++
 
 before_install:
 # Workaround for https://github.com/travis-ci/travis-ci/issues/6307
@@ -36,16 +38,14 @@ install:
       brew upgrade cmake
       brew install ninja
       brew install conan
-      CONAN_ARGS="-s compiler=apple-clang -s compiler.version=8.0 -s compiler.libcxx=libc++"
     else
       pip install conan
-      CONAN_ARGS="-s compiler=gcc -s compiler.version=6.3 -s compiler.libcxx=libstdc++"
     fi
   - cmake --version
 
 script:
   - mkdir build && cd build
-  - conan install .. ${CONAN_ARGS} --build=missing
+  - conan install .. -s compiler=${COMPILER} -s compiler.version=${VERSION} -s compiler.libcxx=${LIB} --build=missing
   - cmake -G Ninja -DCMAKE_BUILD_TYPE=Release ..
   - cmake --build .
 
