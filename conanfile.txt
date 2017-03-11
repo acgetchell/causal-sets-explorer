@@ -1,5 +1,5 @@
 [requires]
-Boost/1.60.0@lasote/ci
+Boost/1.63.0@windoze/stable
 gmock/1.8.0@meshell/stable
 
 [generators]
