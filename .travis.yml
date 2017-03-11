@@ -14,12 +14,12 @@ matrix:
     - os: osx
       osx_image: xcode8.2
       language: generic
-      env: COMPILER=apple-clang VERSION=8.0 LIB=libc++
+#      env: COMPILER=apple-clang VERSION=8.0 LIB=libc++
 
     # gcc
     - os: linux
       dist: trusty
-      env: COMPILER=gcc VERSION=6.3 LIB=libstdc++
+#      env: COMPILER=gcc VERSION=6.3 LIB=libstdc++
 
 before_install:
 # Workaround for https://github.com/travis-ci/travis-ci/issues/6307
@@ -42,10 +42,11 @@ install:
       pip install conan
     fi
   - cmake --version
+  - if [[ "$CXX" = "g++" ]]; then export CXX="g++-6" CC="gcc-6"; fi
 
 script:
   - mkdir build && cd build
-  - conan install .. -s compiler=${COMPILER} -s compiler.version=${VERSION} -s compiler.libcxx=${LIB} --build=missing
+  - conan install .. --build=missing
   - cmake -G Ninja -DCMAKE_BUILD_TYPE=Release ..
   - cmake --build .
 
