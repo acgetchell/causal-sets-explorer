@@ -57,6 +57,7 @@ install:
     if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
       brew unlink cmake
       brew upgrade cmake
+      brew install gcc
       brew install ninja
       brew install conan
     else
@@ -75,6 +76,6 @@ script:
   - cmake -G Ninja -DCMAKE_BUILD_TYPE=Release ..
   - cmake --build .
 
-after_script:
+after_success:
   - (cd bin && ./causal_sets_explorer)
   - (cd bin && ./unittests)
