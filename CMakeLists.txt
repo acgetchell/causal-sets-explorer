@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.7)
+cmake_minimum_required(VERSION 3.2)
 project(causal_sets_explorer)
 
 include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
