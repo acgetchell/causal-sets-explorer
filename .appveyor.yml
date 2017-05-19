@@ -37,7 +37,7 @@ before_build:
 build_script:
   - mkdir build
   - cd build
-  - conan install .. --build-missing
+  - conan install .. --build=missing
   - cmake -G "Visual Studio 14 2015 Win64" -DCMAKE_BUILD_TYPE=Release ..
   - cmake --build .
 
