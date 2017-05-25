@@ -1,10 +1,19 @@
-cmake_minimum_required(VERSION 3.7)
 project(causal_sets_explorer)
+
+cmake_minimum_required(VERSION 3.8.0)
 
 include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
 conan_basic_setup()
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+
+#Extra warnings
+add_definitions(-Wall)
+
+# Toggle GoogleMock
+option(GMOCK_TESTS OFF)
 
 set(SOURCE_FILES src/main.cpp)
 add_executable(causal_sets_explorer ${SOURCE_FILES})
@@ -12,7 +21,6 @@ target_link_libraries(causal_sets_explorer ${CONAN_LIBS})
 
 #GMock Tests executable
 ###############################################################################
-set(GMOCK_TESTS TRUE)
 if (GMOCK_TESTS)
 
     set(UT_EXECUTABLE_NAME "unittests")

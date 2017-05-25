@@ -10,7 +10,8 @@
 using Graph = boost::adjacency_list<>;
 using SWGen = boost::small_world_iterator<boost::minstd_rand, Graph>;
 
-int main() {
+int main()
+{
   boost::minstd_rand gen;
   // Create graph with 100 nodes
   Graph g{SWGen(gen, 100, 6, 0.03), SWGen(), 100};
