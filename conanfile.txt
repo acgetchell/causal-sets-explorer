@@ -1,5 +1,5 @@
 [requires]
-Boost/1.64.0@eliaskousk/stable
+Boost/1.62.0@lasote/stable
 gmock/1.8.0@meshell/stable
 
 [generators]
