@@ -1,5 +1,6 @@
 # causal-sets-explorer
 [![Build Status](https://travis-ci.org/acgetchell/causal-sets-explorer.svg?branch=master)](https://travis-ci.org/acgetchell/causal-sets-explorer)
+[![Build status](https://ci.appveyor.com/api/projects/status/3fhdjahof4d19ue0?svg=true)](https://ci.appveyor.com/project/acgetchell/causal-sets-explorer)
 
 [Causal set][3] explorer performs graph-theoretic calculations on Causal sets.
 
