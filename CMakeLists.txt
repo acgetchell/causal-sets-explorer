@@ -10,7 +10,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 #Extra warnings
-add_definitions(-Wall)
+#add_definitions(-Wall)
 
 # Toggle GoogleMock
 option(GMOCK_TESTS OFF)
