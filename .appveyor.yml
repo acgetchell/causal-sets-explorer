@@ -43,7 +43,7 @@ build_script:
 
 on_success:
   - cd bin
-  - causual_sets_explorer.exe
+  - cmd: causual_sets_explorer.exe
 
 #test_script:
 #  - unittests.exe
@@ -57,5 +57,5 @@ notifications:
     message: "{{message}}, {{commitId}}, ..."
     on_build_status_changed: true
 
-#on_finish:
-#  - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+on_finish:
+  - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
