@@ -3,6 +3,12 @@ sudo: false
 dist: trusty
 osx_image: xcode8.2
 
+env:
+  global:
+   # The next declaration is the encrypted COVERITY_SCAN_TOKEN, created
+   #   via the "travis encrypt" command using the project repo's public key
+   - secure: "m+4GYWw4cqwuqm9If5bFt2pHLPIDbRr+FErwtav4m6f7RF0AYa79loJXLkZ0cJFl6x9XK2okwfJibz7M7RWB5hKPsYIuWHsdLPcTd+ipZDhH/KhICUdsot+avz+6zO8NtUrN8QCwAzXUr3ATYz6SLzYxpbJqehLZLv7yqoAQ7Za3X+Q5R+AIu8P2H5sAYYnSSp8GppNeJKXu2hFVxHrwwFWzWYlHJloCpuyZx4PDuGffUkedcbVcCDFvWBOAV3seY1zMza+s/SYBA8kLSGp4WuYQt8s5D50xQd5DVRwwzQ3U4+XvNZlBnvwzoPQVCH3DGiwU4V1hhiSQXQOlheEIuOTWEaiSQpRRSE/LnejewWLoG+5kMRXnccwphu8AzVtVqUBhmm5Vax3sB7h1u7YrKVt/rrNhk/ue1VyU2YbUVDfFvUw8iB9TlhMt3ZALq/cP81uq5lLsPOdFiQXu6BQfD7+Fc3Q4U3k859ioRsXDr5Wkb4csOUa/F4XkHZGxs+ZU5wJ+LkvdyuHDOyJFGopYafurdsuj9EscnZMKP1g1nUS9syqnF0Rpe7DrKCwLmF3yAvFeqkkbs2/bZA6chtujtZrocDyXqA/6VKPuQzqwyZC/AerVX/H7LhwjqS06tQzG6krW9uWJChKHpNk2Pp+7Ewv1Z/QdJDZqo7aPhptE07U="
+
 addons:
   apt:
     packages:
@@ -13,6 +19,14 @@ addons:
     sources: &sources
       - ubuntu-toolchain-r-test
       - llvm-toolchain-trusty-3.9
+  coverity_scan:
+      project:
+        name: "acgetchell/causal-sets-explorer"
+        description: "Build submitted via Travis CI"
+      notification_email: acgetchell@ucdavis.edu
+      build_command_prepend: "mkdir build && cd build && conan install .. --build=missing"
+      build_command:   "cmake -G Ninja -DCMAKE_BUILD_TYPE=Release .."
+      branch_pattern: coverity-scan
 
 os:
   - linux
@@ -37,6 +51,9 @@ before_install:
       rvm get stable --auto-dotfiles
       brew update
     fi
+# Coverity
+  - echo -n | openssl s_client -connect scan.coverity.com:443 | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' | sudo tee -a /etc/ssl/certs/ca-
+
 
 install:
 #  - if [[ "${COMPILER}" != "" ]]; then export CXX=${COMPILER}; fi
@@ -59,10 +76,12 @@ install:
   - if [[ "$TRAVIS_OS_NAME" == "linux" && "$CXX" == "clang++" ]]; then export CXX="clang++-3.9" CC="clang-3.9"; fi
 
 script:
-  - mkdir build && cd build
-  - conan install .. --build=missing
-  - cmake -G Ninja -DCMAKE_BUILD_TYPE=Release ..
-  - cmake --build .
+  - |
+    if [[ "${COVERITY_SCAN_BRANCH}" != 1 ]]; then
+      mkdir build && cd build
+      conan install .. --build=missing
+      cmake -G Ninja -DCMAKE_BUILD_TYPE=Release ..
+      cmake --build .
 
 after_success:
   - (cd bin && ./causal_sets_explorer)
