@@ -15,6 +15,9 @@ matrix:
          language: generic
          env:
 
+before_install:
+  - ./.travis/before_install.sh
+
 install:
   - ./.travis/install.sh
 
@@ -22,5 +25,7 @@ script:
   - ./.travis/run.sh
 
 after_success:
-  - (cd project/build/bin && ./causal_sets_explorer)
-  - (cd project/build/bin && ./unittests)
+  - ls -la
+  - pwd
+  - (cd build/bin && ./causal_sets_explorer)
+  - (cd build/bin && ./unittests)
