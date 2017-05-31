@@ -1,7 +1,7 @@
 #!/bin/bash
 
-if [[ "$(uname -s)" == 'Darwin' ]]; then
-    # Run with native OSX
+if [ -z $DOCKER_IMAGE ]; then
+    # Run with native
     .travis/run_project_build.sh
 else
     # Run with docker
