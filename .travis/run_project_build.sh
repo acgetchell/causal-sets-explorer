@@ -7,4 +7,4 @@ cmake --build .
 
 ls -la bin
 cd bin && ./causal_sets_explorer
-cd bin && ./unittests
+# Tests not built? cd bin && ./unittests
