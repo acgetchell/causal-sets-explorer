@@ -23,9 +23,3 @@ install:
 
 script:
   - ./.travis/run.sh
-
-after_success:
-  - ls -la
-  - pwd
-  - (cd build/bin && ./causal_sets_explorer)
-  - (cd build/bin && ./unittests)
