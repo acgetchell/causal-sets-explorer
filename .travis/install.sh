@@ -9,8 +9,7 @@ if [[ "$(uname -s)" == 'Darwin' ]]; then
     brew install pyenv-virtualenv
     brew unlink cmake
     brew upgrade cmake
-    brew install gcc
-    brew link --overwrite gcc
+    brew install gcc || brew install gcc
     brew install ninja
 
     if which pyenv > /dev/null; then
