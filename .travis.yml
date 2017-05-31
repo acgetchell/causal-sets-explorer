@@ -22,5 +22,5 @@ script:
   - ./.travis/run.sh
 
 after_success:
-  - (cd bin && ./causal_sets_explorer)
-  - (cd bin && ./unittests)
+  - (cd project/build/bin && ./causal_sets_explorer)
+  - (cd project/build/bin && ./unittests)
