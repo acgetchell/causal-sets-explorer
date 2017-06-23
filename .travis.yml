@@ -61,8 +61,9 @@ install:
 script:
   - mkdir build && cd build
   - conan install .. --build=missing
-  - cmake -G Ninja -DCMAKE_BUILD_TYPE=Release ..
-  - cmake --build .
+#  - cmake -G Ninja -DCMAKE_BUILD_TYPE=Release ..
+#  - cmake --build .
+  - conan build ..
 
 after_success:
   - (cd bin && ./causal_sets_explorer)
