@@ -61,7 +61,7 @@ install:
 script:
   - mkdir build && cd build
   - conan install .. --build=missing
-  - cmake -G Ninja -DCMAKE_BUILD_TYPE=Release ..
+  - cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DGMOCK_TESTS:BOOL=ON ..
   - cmake --build .
 #  - conan build ..
 
