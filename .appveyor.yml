@@ -38,13 +38,12 @@ build_script:
   - mkdir build
   - cd build
   - conan install .. --build=missing
-  - cmake -G "Visual Studio 14 2015 Win64" -DGMOCK_TESTS:BOOL=ON -DCMAKE_BUILD_TYPE=Release ..
+  - cmake -G "Visual Studio 14 2015 Win64" -DCMAKE_BUILD_TYPE=Release ..
   - cmake --build .
 
 on_success:
   - cd bin
   - causal_sets_explorer.exe
-  - unittests.exe
 
 #test_script:
 #  - unittests.exe
