@@ -55,15 +55,16 @@ install:
       pip install conan
     fi
   - cmake --version
+  - conan user
   - if [[ "$CXX" = "g++" ]]; then export CXX="g++-6" CC="gcc-6"; fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" && "$CXX" == "clang++" ]]; then export CXX="clang++-3.9" CC="clang-3.9"; fi
 
 script:
   - mkdir build && cd build
   - conan install .. --build=missing
-#  - cmake -G Ninja -DCMAKE_BUILD_TYPE=Release ..
-#  - cmake --build .
-  - conan build ..
+  - cmake -G Ninja -DCMAKE_BUILD_TYPE=Release ..
+  - cmake --build .
+#  - conan build ..
 
 after_success:
   - (cd bin && ./causal_sets_explorer)
