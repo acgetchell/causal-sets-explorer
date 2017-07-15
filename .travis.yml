@@ -1,25 +1,70 @@
-os: linux
-services:
-   - docker
-sudo: required
-language: python
-env:
-  matrix:
-    - DOCKER_IMAGE=lasote/conangcc63 # 6.3
-    - DOCKER_IMAGE=lasote/conanclang39 # 3.9
+language: cpp
+sudo: false
+dist: trusty
+osx_image: xcode8.2
+
+addons:
+  apt:
+    packages:
+      - g++-6
+      - ninja-build
+      - clang-3.9
+      - lldb-3.9
+    sources: &sources
+      - ubuntu-toolchain-r-test
+      - llvm-toolchain-trusty-3.9
+
+os:
+  - linux
+  - osx
+
+compiler:
+  - gcc
+  - clang
 
 matrix:
-   include:
-       - os: osx
-         osx_image: xcode8.2 # apple-clang 8.0
-         language: generic
-         env:
+  allow_failures:
+    - os: linux
+      compiler: gcc
+    - os: osx
+      compiler: gcc
 
 before_install:
-  - ./.travis/before_install.sh
+# Workaround for https://github.com/travis-ci/travis-ci/issues/6307
+  - |
+    if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+      gpg2 --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
+      rvm get stable --auto-dotfiles
+      brew update
+    fi
 
 install:
-  - ./.travis/install.sh
+#  - if [[ "${COMPILER}" != "" ]]; then export CXX=${COMPILER}; fi
+  - |
+    if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+      brew unlink cmake
+      brew upgrade cmake
+      brew install gcc
+      brew link --overwrite gcc
+      brew install ninja
+      brew install conan
+    else
+      CMAKE_URL="https://cmake.org/files/v3.8/cmake-3.8.2-Linux-x86_64.tar.gz"
+      mkdir cmake && travis_retry wget --no-check-certificate --quiet -O - ${CMAKE_URL} | tar --strip-components=1 -xz -C cmake
+      export PATH=${TRAVIS_BUILD_DIR}/cmake/bin:${PATH}
+      pip install conan
+    fi
+  - cmake --version
+  - if [[ "$CXX" = "g++" ]]; then export CXX="g++-6" CC="gcc-6"; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" && "$CXX" == "clang++" ]]; then export CXX="clang++-3.9" CC="clang-3.9"; fi
 
 script:
-  - ./.travis/run.sh
+  - mkdir build && cd build
+  - conan install .. --build=missing
+  - cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DGMOCK_TESTS:BOOL=ON ..
+  - cmake --build .
+#  - conan build ..
+
+after_success:
+  - (cd bin && ./causal_sets_explorer)
+  - (cd bin && ./unittests)
