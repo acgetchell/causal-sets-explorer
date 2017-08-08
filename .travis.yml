@@ -8,11 +8,11 @@ addons:
     packages:
       - g++-6
       - ninja-build
-      - clang-3.9
-      - lldb-3.9
+      - clang-4.0
+      - lldb-4.0
     sources: &sources
       - ubuntu-toolchain-r-test
-      - llvm-toolchain-trusty-3.9
+      - llvm-toolchain-trusty-4.0
 
 os:
   - linux
@@ -42,8 +42,7 @@ install:
 #  - if [[ "${COMPILER}" != "" ]]; then export CXX=${COMPILER}; fi
   - |
     if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
-      brew unlink cmake
-      brew upgrade cmake
+      brew outdated cmake || brew upgrade cmake
       brew install gcc
       brew link --overwrite gcc
       brew install ninja
@@ -56,7 +55,7 @@ install:
     fi
   - cmake --version
   - if [[ "$CXX" = "g++" ]]; then export CXX="g++-6" CC="gcc-6"; fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" && "$CXX" == "clang++" ]]; then export CXX="clang++-3.9" CC="clang-3.9"; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" && "$CXX" == "clang++" ]]; then export CXX="clang++-4.0" CC="clang-4.0"; fi
 
 script:
   - mkdir build && cd build
