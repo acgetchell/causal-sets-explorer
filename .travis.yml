@@ -8,11 +8,15 @@ addons:
     packages:
       - g++-6
       - ninja-build
-      - clang-4.0
-      - lldb-4.0
+      - clang-5.0
+      - valgrind
     sources: &sources
       - ubuntu-toolchain-r-test
-      - llvm-toolchain-trusty-4.0
+      - llvm-toolchain-trusty-5.0
+
+cache:
+  directories:
+    - ${HOME}/.conan/data
 
 os:
   - linux
@@ -23,6 +27,11 @@ compiler:
   - clang
 
 matrix:
+  fast_finish: true
+  include:
+    - os: linux
+    - compiler: gcc
+    - env: VALGRIND=true
   allow_failures:
     - os: linux
       compiler: gcc
@@ -54,8 +63,9 @@ install:
       pip install conan
     fi
   - cmake --version
-  - if [[ "$CXX" = "g++" ]]; then export CXX="g++-6" CC="gcc-6"; fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" && "$CXX" == "clang++" ]]; then export CXX="clang++-4.0" CC="clang-4.0"; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" && "$CXX" = "g++" ]]; then export CXX="g++-6" CC="gcc-6"; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" && "$CXX" == "g++" ]]; then export CXX="g++7" CC="gcc-7"; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" && "$CXX" == "clang++" ]]; then export CXX="clang++-5.0" CC="clang-5.0"; fi
 
 script:
   - mkdir build && cd build
@@ -65,5 +75,7 @@ script:
 #  - conan build ..
 
 after_success:
-  - (cd bin && ./causal_sets_explorer)
-  - (cd bin && ./unittests)
+  - cd bin
+  - ./causal_sets_explorer
+  - ./unittests
+  - if [[ ${VALGRIND} == "true" ]]; then valgrind --leak-check=full --show-leak-kinds=all ./causal_sets_explorer
