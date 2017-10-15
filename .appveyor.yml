@@ -17,6 +17,9 @@ shallow_clone: true
 
 configuration: Release
 
+cache:
+  - C:\.conan
+
 install:
   # Install Conan
   - echo "Downloading conan..."

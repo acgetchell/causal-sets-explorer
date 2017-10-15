@@ -1,7 +1,6 @@
 # Compiled Object files
 *.slo
 *.lo
-*.o
 *.obj
 
 # Precompiled Headers
@@ -10,7 +9,6 @@
 
 # Compiled Dynamic libraries
 *.so
-*.dylib
 *.dll
 
 # Fortran module files
@@ -25,7 +23,6 @@
 
 # Executables
 *.exe
-*.out
 *.app
 
 # Project files
