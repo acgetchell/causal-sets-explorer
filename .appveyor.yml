@@ -19,6 +19,7 @@ configuration: Release
 
 cache:
   - C:\.conan
+  - C:\Users\appveyor\.conan -> registry.txt
 
 install:
   # Install Conan
@@ -52,8 +53,8 @@ notifications:
   - provider: Email
     to:
       - acgetchell@ucdavis.edu
-    subject: 'Build {{status}}'
-    message: "{{message}}, {{commitId}}, ..."
+#    subject: 'Build {{status}}'
+#    message: "{{message}}, {{commitId}}, ..."
     on_build_status_changed: true
 
 #on_finish:
