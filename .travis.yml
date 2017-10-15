@@ -35,8 +35,8 @@ matrix:
   allow_failures:
     - os: linux
       compiler: gcc
-    - os: osx
-      compiler: gcc
+    - os: linux
+      compiler: clang
 
 before_install:
 # Workaround for https://github.com/travis-ci/travis-ci/issues/6307
