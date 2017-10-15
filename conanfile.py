@@ -13,5 +13,5 @@ class CausalSetsExplorer(ConanFile):
     def build(self):
         cmake = CMake(self)
         cmake.verbose = True
-        cmake.configure(args=["Ninja", "CMAKE_BUILD_TYPE=Release", "GMOCK_TESTS:BOOL=ON"])
+        cmake.configure(args=["CMAKE_BUILD_TYPE=Release", "GMOCK_TESTS:BOOL=ON"])
         cmake.build()
