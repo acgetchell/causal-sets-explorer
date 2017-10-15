@@ -1,5 +1,5 @@
 language: cpp
-sudo: true
+sudo: false
 dist: trusty
 osx_image: xcode9.1
 
