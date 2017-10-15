@@ -6,7 +6,8 @@ if (EXISTS ${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
     include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
     conan_basic_setup()
 else()
-    message(WARNING "The file conanbuildinfo.cmake doesn't exit, run conan install.")
+    message(WARNING "The file conanbuildinfo.cmake doesn't exist, running conan install.")
+    execute_process(COMMAND conan install .. --build=missing)
 endif ()
 
 
@@ -27,20 +28,30 @@ target_link_libraries(causal_sets_explorer ${CONAN_LIBS})
 #GMock Tests executable
 ###############################################################################
 if (GMOCK_TESTS)
-
     set(UT_EXECUTABLE_NAME "unittests")
 
     #Test files
     file(GLOB TEST_FILES "unittests/*.cpp")
-
     add_executable("${UT_EXECUTABLE_NAME}" ${TEST_FILES} ${SRC_FILES})
 
     #Set link libraries(order matters)
     target_link_libraries("${UT_EXECUTABLE_NAME}"
-            ${TBB_LIBRARIES} gmock gtest pthread)
+                            gmock gtest pthread)
 
     #Include root directory
     include_directories(BEFORE ".")
     include_directories(BEFORE "src/")
-
 endif()
+
+#CTest Integration tests
+include(CTest)
+
+# Does the causal_sets_explorer run?
+add_test(NAME causal_sets_explorer-Run
+         COMMAND causal_sets_explorer)
+#         --config $<CONFIGURATION>)
+#         --exe $<TARGET_FILE:causal_sets_explorer>)
+set_tests_properties(causal_sets_explorer-Run
+        PROPERTIES
+        PASS_REGULAR_EXPRESSION "digraph")
+

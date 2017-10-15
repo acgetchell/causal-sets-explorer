@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/acgetchell/causal-sets-explorer.svg?branch=master)](https://travis-ci.org/acgetchell/causal-sets-explorer)
 [![Build status](https://ci.appveyor.com/api/projects/status/3fhdjahof4d19ue0?svg=true)](https://ci.appveyor.com/project/acgetchell/causal-sets-explorer)
 
-[Causal set][3] explorer performs graph-theoretic calculations on Causal sets.
+[Causal set][3] explorer will eventually perform graph-theoretic calculations on Causal sets.
 
 ## Initial Set Up
 This project uses the [Conan C/C++ package manager][1]. To get started on MacOS
@@ -13,13 +13,13 @@ brew install conan
 git clone https://github.com/acgetchell/causal-sets-explorer.git
 cd causal-sets-explorer
 mkdir build && cd build
-conan install .. -s compiler=apple-clang -s compiler.version=8.1 -s compiler.libcxx=libc++ --build=missing
-cmake -G Ninja -DCMAKE_BUILD_TYPE=Release ..
-cmake --build .
+conan install .. --build=missing
+conan build ..
 ~~~
 
-Replace the `compiler`, `compiler.version`, and `compiler.libcxx` options with
-the ones appropriate to your settings.
+Linux and Windows are nearly identical, with `pip install conan` replacing `brew install conan`.
+
+You also need [CMake][cmake], at least until I figure out how to [get Conan to install it][5].
 
 If you get a message like:
 
@@ -40,3 +40,5 @@ Before re-running `conan install`.
 [2]: https://github.com/conan-io/conan/issues/1067#issuecomment-284219916
 [3]: https://en.wikipedia.org/wiki/Causal_sets
 [4]: https://brew.sh/
+[5]: http://conanio.readthedocs.io/en/latest/mastering/build_requires.html#build-requires
+[cmake]: https://cmake.org/
