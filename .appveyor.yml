@@ -45,18 +45,17 @@ build_script:
 on_success:
   - cd bin
   - causal_sets_explorer.exe
-
-test_script:
-#  - unittests.exe
-  - cd bin
   - cmake --build .. --target test
+
+#test_script:
+##  - unittests.exe
+#  - cd bin
+#  - cmake --build .. --target test
 
 notifications:
   - provider: Email
     to:
       - acgetchell@ucdavis.edu
-#    subject: 'Build {{status}}'
-#    message: "{{message}}, {{commitId}}, ..."
     on_build_status_changed: true
 
 #on_finish:
