@@ -48,7 +48,7 @@ on_success:
 
 test_script:
 #  - unittests.exe
-  - cd
+  - cd bin
   - cmake --build . --target test
 
 notifications:
