@@ -2,8 +2,9 @@ from conans import ConanFile, CMake
 
 class CausalSetsExplorer(ConanFile):
     settings = "os", "compiler", "build_type", "arch"
-    requires = "Boost/1.64.0@eliaskousk/stable", "gmock/1.8.0@meshell/stable"
+    requires = "Boost/1.64.0@inexorgame/stable", "gmock/1.8.0@meshell/stable"
     generators = "cmake"
+    default_options = "Boost:header_only=True"
 
     def imports(self):
         self.copy("*.dll", dst="bin", src="bin")
@@ -11,5 +12,6 @@ class CausalSetsExplorer(ConanFile):
 
     def build(self):
         cmake = CMake(self)
-        cmake.configure()
+        cmake.verbose = True
+        cmake.configure(args=["Ninja", "CMAKE_BUILD_TYPE=Release", "GMOCK_TESTS:BOOL=ON"])
         cmake.build()
