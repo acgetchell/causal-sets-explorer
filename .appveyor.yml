@@ -47,7 +47,8 @@ on_success:
 
 test_script:
 #  - unittests.exe
-  - cmake --build .. --target test
+  - cd
+  - cmake --build . --target test
 
 notifications:
   - provider: Email
