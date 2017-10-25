@@ -33,6 +33,7 @@ install:
 
 before_build:
   - cd C:\projects\causal-sets-explorer
+  - conan remote add bincrafters https://api.bintray.com/conan/bincrafters/public-conan
 
 build_script:
   - mkdir build

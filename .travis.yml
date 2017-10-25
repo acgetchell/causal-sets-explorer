@@ -66,6 +66,7 @@ install:
   - if [[ "$TRAVIS_OS_NAME" == "linux" && "$CXX" = "g++" ]]; then export CXX="g++-6" CC="gcc-6"; fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" && "$CXX" == "g++" ]]; then export CXX="g++-7" CC="gcc-7"; fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" && "$CXX" == "clang++" ]]; then export CXX="clang++-5.0" CC="clang-5.0"; fi
+  - conan remote add bincrafters https://api.bintray.com/conan/bincrafters/public-conan
 
 script:
   - mkdir build && cd build
