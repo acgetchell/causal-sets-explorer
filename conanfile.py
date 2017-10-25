@@ -4,7 +4,7 @@ class CausalSetsExplorer(ConanFile):
     settings = "os", "compiler", "build_type", "arch"
     requires = "Boost.Graph/1.65.1@bincrafters/stable", "gmock/1.8.0@meshell/stable"
     generators = "cmake"
-    default_options = "Boost:header_only=True"
+    # default_options = "Boost:header_only=True"
 
     def imports(self):
         self.copy("*.dll", dst="bin", src="bin")
