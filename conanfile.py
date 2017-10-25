@@ -2,7 +2,7 @@ from conans import ConanFile, CMake
 
 class CausalSetsExplorer(ConanFile):
     settings = "os", "compiler", "build_type", "arch"
-    requires = "Boost/1.64.0@inexorgame/stable", "gmock/1.8.0@meshell/stable"
+    requires = "Boost.Graph/1.65.1@bincrafters/stable", "gmock/1.8.0@meshell/stable"
     generators = "cmake"
     default_options = "Boost:header_only=True"
 
