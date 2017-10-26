@@ -15,9 +15,9 @@ addons:
       - ubuntu-toolchain-r-test
       - llvm-toolchain-trusty-5.0
 
-cache:
-  directories:
-    - ${HOME}/.conan/data
+#cache:
+#  directories:
+#    - ${HOME}/.conan/data
 
 os:
   - linux
@@ -71,7 +71,11 @@ install:
 
 script:
   - mkdir build && cd build
-  - conan install .. --build=missing
+  - if [[ "$TRAVIS_OS_NAME" == "linux" && "$CXX" == "clang++" ]]; then
+      conan install -s compiler=clang -s compiler.version=5.0 -s compiler.libcxx=libc++ .. --build=missing
+    else
+      conan install .. --build=missing
+    fi
 #  - cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DGMOCK_TESTS:BOOL=ON ..
 #  - cmake --build .
   - conan build ..
