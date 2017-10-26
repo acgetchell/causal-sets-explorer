@@ -19,7 +19,7 @@ configuration: Release
 
 cache:
   - C:\.conan
-#  - C:\Users\appveyor\.conan -> registry.txt
+  - C:\Users\appveyor\.conan -> registry.txt
 
 install:
   # Install Conan
