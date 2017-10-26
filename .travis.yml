@@ -10,7 +10,6 @@ addons:
       - ninja-build
       - clang-5.0
       - valgrind
-      - python3.4
     sources: &sources
       - ubuntu-toolchain-r-test
       - llvm-toolchain-trusty-5.0
@@ -61,7 +60,7 @@ install:
       CMAKE_URL="https://cmake.org/files/v3.8/cmake-3.8.2-Linux-x86_64.tar.gz"
       mkdir cmake && travis_retry wget --no-check-certificate --quiet -O - ${CMAKE_URL} | tar --strip-components=1 -xz -C cmake
       export PATH=${TRAVIS_BUILD_DIR}/cmake/bin:${PATH}
-      pip install conan
+      pip3 install conan
     fi
   - cmake --version
   - if [[ "$TRAVIS_OS_NAME" == "linux" && "$CXX" = "g++" ]]; then export CXX="g++-6" CC="gcc-6"; fi
