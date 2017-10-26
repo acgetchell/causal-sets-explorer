@@ -33,6 +33,7 @@ install:
 
 before_build:
   - cd C:\projects\causal-sets-explorer
+  - conan remote add bincrafters https://api.bintray.com/conan/bincrafters/public-conan
 
 build_script:
   - mkdir build
@@ -45,7 +46,7 @@ build_script:
 on_success:
   - cd bin
   - causal_sets_explorer.exe
-  - cd
+#  - cd
 #  - cmake --build .. --target test
 
 #test_script:
