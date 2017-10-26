@@ -29,10 +29,10 @@ compiler:
 
 matrix:
   fast_finish: true
-  include:
-    - os: linux
-    - compiler: gcc
-    - env: VALGRIND=true
+#  include:
+#    - os: linux
+#    - compiler: gcc
+#    - env: VALGRIND=true
   allow_failures:
     - os: linux
       compiler: clang
