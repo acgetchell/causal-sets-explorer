@@ -8,12 +8,12 @@ addons:
     packages:
       - g++-7
       - ninja-build
-      - clang-5.0
+      - clang-4.0
       - valgrind
       - python3-pip
     sources: &sources
       - ubuntu-toolchain-r-test
-      - llvm-toolchain-trusty-5.0
+      - llvm-toolchain-trusty-4.0
 
 #cache:
 #  directories:
@@ -66,16 +66,12 @@ install:
   - cmake --version
 #  - if [[ "$TRAVIS_OS_NAME" == "linux" && "$CXX" = "g++" ]]; then export CXX="g++-6" CC="gcc-6"; fi
   - if [[ "$CXX" == "g++" ]]; then export CXX="g++-7" CC="gcc-7"; fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" && "$CXX" == "clang++" ]]; then export CXX="clang++-5.0" CC="clang-5.0"; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" && "$CXX" == "clang++" ]]; then export CXX="clang++-4.0" CC="clang-4.0"; fi
   - conan remote add bincrafters https://api.bintray.com/conan/bincrafters/public-conan
 
 script:
   - mkdir build && cd build
-  - if [[ "$TRAVIS_OS_NAME" == "linux" && "$CXX" == "clang++" ]]; then
-      conan install -s compiler=clang -s compiler.version=5.0 -s compiler.libcxx=libc++ .. --build=missing
-    else
-      conan install .. --build=missing
-    fi
+  - conan install .. --build=missing
 #  - cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DGMOCK_TESTS:BOOL=ON ..
 #  - cmake --build .
   - conan build ..
@@ -83,7 +79,7 @@ script:
 after_success:
   - cd bin
   - ./causal_sets_explorer
-  - ./unittests
-  - if [[ ${VALGRIND} == "true" ]]; then valgrind --leak-check=full --show-leak-kinds=all ./causal_sets_explorer
+#  - ./unittests
+#  - if [[ ${VALGRIND} == "true" ]]; then valgrind --leak-check=full --show-leak-kinds=all ./causal_sets_explorer
   # CTest
   - cmake --build .. --target test
