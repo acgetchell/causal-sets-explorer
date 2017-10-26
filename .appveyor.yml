@@ -17,9 +17,9 @@ shallow_clone: true
 
 configuration: Release
 
-#cache:
-#  - C:\.conan
-#  - C:\Users\appveyor\.conan -> registry.txt
+cache:
+  - C:\.conan
+  - C:\Users\appveyor\.conan -> registry.txt
 
 install:
   # Install Conan
