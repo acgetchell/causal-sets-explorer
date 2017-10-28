@@ -33,9 +33,9 @@ matrix:
 #    - os: linux
 #    - compiler: gcc
 #    - env: VALGRIND=true
-  allow_failures:
-    - os: linux
-      compiler: clang
+#  allow_failures:
+#    - os: linux
+#      compiler: clang
 
 before_install:
 # Workaround for https://github.com/travis-ci/travis-ci/issues/6307
