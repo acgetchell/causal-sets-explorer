@@ -2,11 +2,11 @@
 [![Build Status](https://travis-ci.org/acgetchell/causal-sets-explorer.svg?branch=master)](https://travis-ci.org/acgetchell/causal-sets-explorer)
 [![Build status](https://ci.appveyor.com/api/projects/status/3fhdjahof4d19ue0?svg=true)](https://ci.appveyor.com/project/acgetchell/causal-sets-explorer)
 
-[Causal set][3] explorer will eventually perform graph-theoretic calculations on Causal sets.
+[Causal set][causets] explorer will eventually perform graph-theoretic calculations on Causal sets.
 
 ## Initial Set Up
-This project uses the [Conan C/C++ package manager][1]. To get started on MacOS
-using [Homebrew][4], for example, do:
+This project uses the [Conan C/C++ package manager][conan]. To get started on MacOS
+using [Homebrew][homebrew], for example, do:
 
 ~~~
 brew install conan
@@ -19,26 +19,9 @@ conan build ..
 
 Linux and Windows are nearly identical, with `pip install conan` replacing `brew install conan`.
 
-You also need [CMake][cmake], at least until I figure out how to [get Conan to install it][5].
+(Note that on Linux, you should actually use pip3 and Python 3 in order to avoid [SNIMIssingWarning][sni].)
 
-If you get a message like:
-
-~~~
-zlib/1.2.8@lasote/stable: WARN: Forced build from source
-ERROR: Error while trying to get recipe sources for zlib/1.2.8@lasote/stable. No remote defined
-~~~
-
-Then you've already exported that recipe, and [need to do][2], e.g.:
-
-~~~
-conan remove zlib/1.2.8@lasote/stable
-~~~
-
-Before re-running `conan install`.
-
-[1]: https://www.conan.io
-[2]: https://github.com/conan-io/conan/issues/1067#issuecomment-284219916
-[3]: https://en.wikipedia.org/wiki/Causal_sets
-[4]: https://brew.sh/
-[5]: http://conanio.readthedocs.io/en/latest/mastering/build_requires.html#build-requires
-[cmake]: https://cmake.org/
+[conan]: https://www.conan.io
+[causets]: https://en.wikipedia.org/wiki/Causal_sets
+[homebrew]: https://brew.sh/
+[sni]: https://urllib3.readthedocs.io/en/latest/security.html#snimissingwarning
