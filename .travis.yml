@@ -33,9 +33,9 @@ matrix:
 #    - os: linux
 #    - compiler: gcc
 #    - env: VALGRIND=true
-  allow_failures:
-    - os: linux
-      compiler: clang
+#  allow_failures:
+#    - os: linux
+#      compiler: clang
 
 before_install:
 # Workaround for https://github.com/travis-ci/travis-ci/issues/6307
@@ -47,22 +47,15 @@ before_install:
     fi
 
 install:
-#  - if [[ "${COMPILER}" != "" ]]; then export CXX=${COMPILER}; fi
   - |
     if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
-      brew outdated cmake || brew upgrade cmake
       brew install gcc
       brew link --overwrite gcc
       brew install ninja
       brew install conan
     else
-      CMAKE_URL="https://cmake.org/files/v3.9/cmake-3.9.4-Linux-x86_64.tar.gz"
-      mkdir cmake && travis_retry wget --no-check-certificate --quiet -O - ${CMAKE_URL} | tar --strip-components=1 -xz -C cmake
-      export PATH=${TRAVIS_BUILD_DIR}/cmake/bin:${PATH}
       sudo pip3 install conan
     fi
-  - cmake --version
-#  - if [[ "$TRAVIS_OS_NAME" == "linux" && "$CXX" = "g++" ]]; then export CXX="g++-6" CC="gcc-6"; fi
   - if [[ "$CXX" == "g++" ]]; then export CXX="g++-7" CC="gcc-7"; fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" && "$CXX" == "clang++" ]]; then export CXX="clang++-5.0" CC="clang-5.0"; fi
   - conan remote add bincrafters https://api.bintray.com/conan/bincrafters/public-conan
@@ -75,6 +68,7 @@ script:
   - conan build ..
 
 after_success:
+  - cmake --version
   - cd bin
   - ./causal_sets_explorer
 #  - ./unittests
