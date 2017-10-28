@@ -46,13 +46,11 @@ build_script:
 on_success:
   - cd bin
   - causal_sets_explorer.exe
-#  - cd
-#  - cmake --build .. --target test
 
-#test_script:
-##  - unittests.exe
-#  - cd bin
-#  - cmake --build .. --target test
+test_script:
+  - pwd
+  - unittests.exe
+  - cmake --build .. --target test
 
 notifications:
   - provider: Email
@@ -60,5 +58,5 @@ notifications:
       - acgetchell@ucdavis.edu
     on_build_status_changed: true
 
-#on_finish:
-#  - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+on_finish:
+  - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
