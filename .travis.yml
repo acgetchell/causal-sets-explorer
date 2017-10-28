@@ -50,15 +50,15 @@ install:
 #  - if [[ "${COMPILER}" != "" ]]; then export CXX=${COMPILER}; fi
   - |
     if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
-      brew outdated cmake || brew upgrade cmake
+#      brew outdated cmake || brew upgrade cmake
       brew install gcc
       brew link --overwrite gcc
       brew install ninja
       brew install conan
     else
-      CMAKE_URL="https://cmake.org/files/v3.9/cmake-3.9.4-Linux-x86_64.tar.gz"
-      mkdir cmake && travis_retry wget --no-check-certificate --quiet -O - ${CMAKE_URL} | tar --strip-components=1 -xz -C cmake
-      export PATH=${TRAVIS_BUILD_DIR}/cmake/bin:${PATH}
+#      CMAKE_URL="https://cmake.org/files/v3.9/cmake-3.9.4-Linux-x86_64.tar.gz"
+#      mkdir cmake && travis_retry wget --no-check-certificate --quiet -O - ${CMAKE_URL} | tar --strip-components=1 -xz -C cmake
+#      export PATH=${TRAVIS_BUILD_DIR}/cmake/bin:${PATH}
       sudo pip3 install conan
     fi
   - cmake --version
