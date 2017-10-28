@@ -47,7 +47,6 @@ before_install:
     fi
 
 install:
-#  - if [[ "${COMPILER}" != "" ]]; then export CXX=${COMPILER}; fi
   - |
     if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
       brew install gcc
@@ -57,8 +56,6 @@ install:
     else
       sudo pip3 install conan
     fi
-  - cmake --version
-#  - if [[ "$TRAVIS_OS_NAME" == "linux" && "$CXX" = "g++" ]]; then export CXX="g++-6" CC="gcc-6"; fi
   - if [[ "$CXX" == "g++" ]]; then export CXX="g++-7" CC="gcc-7"; fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" && "$CXX" == "clang++" ]]; then export CXX="clang++-5.0" CC="clang-5.0"; fi
   - conan remote add bincrafters https://api.bintray.com/conan/bincrafters/public-conan
@@ -71,6 +68,7 @@ script:
   - conan build ..
 
 after_success:
+  - cmake --version
   - cd bin
   - ./causal_sets_explorer
 #  - ./unittests
