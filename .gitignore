@@ -27,8 +27,8 @@
 
 # Project files
 .idea
-build/
-xcode/
+build/*
+xcode/*
 
 # MacOS cruft
 *.DS_Store
