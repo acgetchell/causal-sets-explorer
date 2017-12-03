@@ -47,9 +47,9 @@ on_success:
   - cd bin
   - causal_sets_explorer.exe
 
-test_script:
-  - cd bin
-  - pwd
+#test_script:
+#  - cd bin
+#  - pwd
 #  - unittests.exe
 #  - cmake --build .. --target test
 
