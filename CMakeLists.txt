@@ -22,7 +22,7 @@ set(CMAKE_CONFIGURATION_TYPES "Release" "Debug" CACHE STRING "" FORCE)
 #add_definitions(-Wall)
 
 # Toggle GoogleMock
-option(GMOCK_TESTS ON)
+option(GMOCK_TESTS OFF)
 # Set minimum Boost
 set(BOOST_MIN_VERSION "1.65.1")
 
