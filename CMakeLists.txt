@@ -10,16 +10,21 @@ else()
     execute_process(COMMAND conan install .. --build=missing)
 endif ()
 
-
+# Activate C++17 support
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
+
+# Disable CLion generation of RelWithDebInfo and MinSizeRel, et. al
+set(CMAKE_CONFIGURATION_TYPES "Release" "Debug" CACHE STRING "" FORCE)
 
 #Extra warnings
 #add_definitions(-Wall)
 
 # Toggle GoogleMock
 option(GMOCK_TESTS OFF)
+# Set minimum Boost
+set(BOOST_MIN_VERSION "1.65.1")
 
 set(SOURCE_FILES src/main.cpp)
 add_executable(causal_sets_explorer ${SOURCE_FILES})
