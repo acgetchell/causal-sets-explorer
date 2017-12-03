@@ -51,7 +51,7 @@ test_script:
   - cd bin
   - pwd
 #  - unittests.exe
-  - cmake --build .. --target test
+#  - cmake --build .. --target test
 
 notifications:
   - provider: Email
