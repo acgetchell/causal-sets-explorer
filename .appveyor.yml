@@ -44,7 +44,7 @@ build_script:
   - conan build ..
 
 on_success:
-  - cd bin
+#  - cd bin
   - causal_sets_explorer.exe
 
 test_script:
