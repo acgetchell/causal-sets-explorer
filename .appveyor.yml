@@ -44,13 +44,13 @@ build_script:
   - conan build ..
 
 on_success:
-  - cd bin
+#  - cd bin
   - causal_sets_explorer.exe
 
-#test_script:
-#  - cd bin
-#  - pwd
-#  - unittests.exe
+test_script:
+  - cd bin
+  - pwd
+  - causal_sets_explorer_test.exe
 #  - cmake --build .. --target test
 
 notifications:

@@ -2,7 +2,7 @@ from conans import ConanFile, CMake
 
 class CausalSetsExplorer(ConanFile):
     settings = "os", "compiler", "build_type", "arch"
-    requires = "Boost.Graph/1.65.1@bincrafters/stable"
+    requires = "Boost.Graph/1.65.1@bincrafters/stable", "Catch/2.0.1@bincrafters/stable"
     generators = "cmake"
     default_options = "Boost:header_only=True"
 
@@ -13,7 +13,7 @@ class CausalSetsExplorer(ConanFile):
     def build(self):
         cmake = CMake(self)
         cmake.verbose = True
-        cmake.configure(args=["CMAKE_BUILD_TYPE=Release", "GMOCK_TESTS:BOOL=OFF"])
+        cmake.configure(args=["CMAKE_BUILD_TYPE=Release"])
         cmake.build()
 
     def build_requirements(self):

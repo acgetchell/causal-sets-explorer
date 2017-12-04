@@ -71,7 +71,7 @@ after_success:
   - cmake --version
   - cd bin
   - ./causal_sets_explorer
-  - ./unittests
+  - ./causal_sets_explorer_test
   - if [[ ${VALGRIND} == "true" ]]; then valgrind --leak-check=full --show-leak-kinds=all ./causal_sets_explorer
   # CTest
   - cmake --build .. --target test
