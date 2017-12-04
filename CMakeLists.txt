@@ -22,7 +22,7 @@ include_directories(src)
 file(GLOB_RECURSE PROJECT_SOURCE "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp")
 
 #Extra warnings
-add_definitions(-Wall)
+#add_definitions(-Wall)
 
 # Exclude main file for library generation, only use it in the final
 # executable. This lets us test everything without compiling twice.
