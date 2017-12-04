@@ -10,13 +10,20 @@
 using Graph = boost::adjacency_list<>;
 using SWGen = boost::small_world_iterator<boost::minstd_rand, Graph>;
 
-SCENARIO("A graph is generated")
+SCENARIO("Graph operations", "[graph]")
 {
-  GIVEN("A graph with 100 items")
+  GIVEN("A random number generator")  // Arrange
   {
     boost::minstd_rand generator;
-    auto graph = Graph(SWGen(generator, 100, 6, 0.03), SWGen(), 100);
 
-    REQUIRE(boost::is_directed(graph));
+    WHEN("A graph is generated")  // Act
+    {
+      auto graph = Graph(SWGen(generator, 100, 6, 0.03), SWGen(), 100);
+
+      THEN("The graph is directed")  // Assert
+      {
+        REQUIRE(boost::is_directed(graph));
+      }
+    }
   }
 }
