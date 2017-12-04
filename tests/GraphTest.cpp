@@ -10,7 +10,7 @@
 using Graph = boost::adjacency_list<>;
 using SWGen = boost::small_world_iterator<boost::minstd_rand, Graph>;
 
-SCENARIO("Graph operations", "[graph]")
+SCENARIO("Graph operations",    "[graph]")
 {
   GIVEN("A random number generator")  // Arrange
   {
