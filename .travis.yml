@@ -75,3 +75,7 @@ after_success:
   - if [[ ${VALGRIND} == "true" ]]; then valgrind --leak-check=full --show-leak-kinds=all ./causal_sets_explorer
   # CTest
   - cmake --build .. --target test
+
+notifications:
+  webhooks: https://www.travisbuddy.com
+  on_success: never
