@@ -2,7 +2,7 @@ from conans import ConanFile, CMake
 
 class CausalSetsExplorer(ConanFile):
     settings = "os", "compiler", "build_type", "arch"
-    requires = "Boost.Graph/1.65.1@bincrafters/stable", "Catch/2.0.1@bincrafters/stable"
+    requires = "boost/1.67.0@conan/stable", "catch2/2.2.2@bincrafters/stable"
     generators = "cmake"
     default_options = "Boost:header_only=True"
 
@@ -19,4 +19,4 @@ class CausalSetsExplorer(ConanFile):
     def build_requirements(self):
         # AppVeyor already has modern CMake installed
         if self.settings.os != "Windows":
-            self.build_requires("cmake_installer/1.0@conan/stable")
+            self.build_requires("cmake_installer/3.11.3@conan/stable")
