@@ -1,6 +1,6 @@
-project(causal_sets_explorer)
+cmake_minimum_required(VERSION 3.10)
 
-cmake_minimum_required(VERSION 3.9.0)
+project(causal_sets_explorer VERSION 0.1 LANGUAGES CXX)
 
 if (EXISTS ${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
     include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
