@@ -6,7 +6,7 @@ osx_image: xcode9.4
 addons:
   apt:
     packages:
-      - g++-7
+      - g++-8
       - ninja-build
       - clang-5.0
       - valgrind
@@ -56,13 +56,19 @@ install:
     else
       sudo pip3 install conan
     fi
-  - if [[ "$CXX" == "g++" ]]; then export CXX="g++-7" CC="gcc-7"; fi
+  - if [[ "$CXX" == "g++" ]]; then export CXX="g++-8" CC="gcc-8"; fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" && "$CXX" == "clang++" ]]; then export CXX="clang++-5.0" CC="clang-5.0"; fi
   - conan remote add bincrafters https://api.bintray.com/conan/bincrafters/public-conan
 
 script:
   - mkdir build && cd build
-  - conan install .. --build=missing
+  - |
+    if [[ "$TRAVIS_OS_NAME" == "osx" && "$CXX" == "g++" ]]; then
+      conan install .. --build=missing --pr=./.ci/macos-gcc
+    else
+      conan install .. --build=missing
+    fi
+#  - conan install .. --build=missing
 #  - cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DGMOCK_TESTS:BOOL=ON ..
 #  - cmake --build .
   - conan build ..
