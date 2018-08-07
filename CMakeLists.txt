@@ -8,7 +8,7 @@ if (EXISTS ${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
 else()
     message(WARNING "The file conanbuildinfo.cmake doesn't exist, running conan install.")
     execute_process(COMMAND conan install .. --build=missing)
-endif ()
+endif()
 
 # Activate C++17 support
 set(CMAKE_CXX_STANDARD 17)
