@@ -13,11 +13,13 @@ brew install conan
 git clone https://github.com/acgetchell/causal-sets-explorer.git
 cd causal-sets-explorer
 mkdir build && cd build
-conan install .. --build=missing
+conan install .. --build=missing -s compiler=apple-clang -s compiler.version=9.1 -s compiler.libcxx=libc++
 conan build ..
 ~~~
 
 Linux and Windows are nearly identical, with `pip install conan` replacing `brew install conan`.
+
+You must also specify compiler options (the above example is for macOS).
 
 (Note that on Linux, you should actually use pip3 and Python 3 in order to avoid [SNIMIssingWarning][sni].)
 
