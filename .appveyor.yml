@@ -22,6 +22,8 @@ configuration: Release
 #  - C:\Users\appveyor\.conan -> registry.txt
 
 install:
+  # Upgrade pip
+  - python -m pip install --upgrade pip
   # Install Conan
   - echo "Downloading conan..."
   - set PATH=%PATH%;%PYTHON%\Scripts\
