@@ -11,7 +11,7 @@ class CausalSetsExplorer(ConanFile):
         self.copy("*.dylib", dst="bin", src="bin")
 
     def build(self):
-        cmake = CMake(self, generator="Ninja")
+        cmake = CMake(self)
         cmake.verbose = True
         cmake.configure(args=["CMAKE_BUILD_TYPE=Release"])
         cmake.build()
