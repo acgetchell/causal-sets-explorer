@@ -51,8 +51,8 @@ on_success:
 test_script:
   - cd bin
   - pwd
-#  - causal_sets_explorer_test.exe
-  - cmake --build .. --target test
+  - causal_sets_explorer_test.exe
+#  - cmake --build .. --target test
 
 notifications:
   - provider: Email
