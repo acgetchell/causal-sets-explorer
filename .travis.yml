@@ -1,7 +1,7 @@
 language: cpp
 sudo: false
 dist: trusty
-osx_image: xcode9.1
+osx_image: xcode9.4
 
 addons:
   apt:
@@ -41,11 +41,13 @@ matrix:
 
 before_install:
 # Workaround for https://github.com/travis-ci/travis-ci/issues/6307
+# Fix "fatal error: _stdio.h: No such file or directory"
   - |
     if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
       gpg2 --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
       rvm get stable --auto-dotfiles
       brew update
+      sudo softwareupdate -i "Command Line Tools (macOS 10.13) for Xcode 9.4.1"
     fi
 
 install:
