@@ -21,7 +21,7 @@ conan build ..
 
 Linux and Windows are nearly identical, with `pip install conan` replacing `brew install conan`.
 
-You must also specify compiler options (the above example is for macOS).
+You must also specify compiler options; the above example is for macOS. It's probably better to use a [profile].
 
 (Note that on Linux, you should actually use pip3 and Python 3 in order to avoid [SNIMIssingWarning][sni].)
 
@@ -30,3 +30,4 @@ You must also specify compiler options (the above example is for macOS).
 [homebrew]: https://brew.sh/
 [sni]: https://urllib3.readthedocs.io/en/latest/security.html#snimissingwarning
 [cdt-plusplus]: https://github.com/acgetchell/CDT-plusplus
+[profile]: https://github.com/acgetchell/causal-sets-explorer/blob/devel/.ci/gcc

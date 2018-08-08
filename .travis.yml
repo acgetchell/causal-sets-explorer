@@ -16,7 +16,9 @@ addons:
       - llvm-toolchain-trusty-6.0
 
 cache:
-  directories:
+  - pip
+  - ccache
+  - directories:
     - /home/travis/.conan/data/
 
 os:
@@ -49,6 +51,8 @@ before_install:
 install:
   - |
     if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+      brew install ccache
+      export PATH="/usr/local/opt/ccache/libexec:$PATH"
       brew install gcc
       brew link --overwrite gcc
       brew install ninja
