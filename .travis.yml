@@ -1,7 +1,7 @@
 language: cpp
 sudo: false
 dist: trusty
-osx_image: xcode9.4
+#osx_image: xcode9.4
 
 addons:
   apt:
@@ -18,8 +18,8 @@ addons:
 cache:
   - pip
   - ccache
-  - directories:
-    - /home/travis/.conan/data/
+#  - directories:
+#    - /home/travis/.conan/data/
 
 os:
   - linux
@@ -35,9 +35,9 @@ matrix:
 #    - os: linux
 #    - compiler: gcc
 #    - env: VALGRIND=true
-#  allow_failures:
-#    - os: linux
-#      compiler: clang
+  allow_failures:
+    - os: osx
+      compiler: gcc
 
 before_install:
 # Workaround for https://github.com/travis-ci/travis-ci/issues/6307
@@ -90,5 +90,5 @@ notifications:
     urls:
       - https://www.travisbuddy.com
 
-    on_success: change
+    on_success: never
     on_failure: always
