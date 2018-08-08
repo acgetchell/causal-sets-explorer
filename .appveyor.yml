@@ -5,6 +5,7 @@ platform:
 
 image:
   - Visual Studio 2015
+  - Visual Studio 2017
 
 skip_branch_with_pr: true
 
@@ -41,8 +42,6 @@ build_script:
   - mkdir build
   - cd build
   - conan install .. --build=missing
-#  - cmake -G "Visual Studio 14 2015 Win64" -DCMAKE_BUILD_TYPE=Release ..
-#  - cmake --build .
   - conan build ..
 
 on_success:

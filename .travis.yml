@@ -11,13 +11,15 @@ addons:
       - clang-6.0
       - valgrind
       - python3-pip
-    sources: &sources
+    sources:
       - ubuntu-toolchain-r-test
       - llvm-toolchain-trusty-6.0
 
-#cache:
-#  directories:
-#    - ${HOME}/.conan/data
+cache:
+  - pip
+  - ccache
+  - directories:
+    - /home/travis/.conan/data/
 
 os:
   - linux
@@ -49,6 +51,8 @@ before_install:
 install:
   - |
     if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+      brew install ccache
+      export PATH="/usr/local/opt/ccache/libexec:$PATH"
       brew install gcc
       brew link --overwrite gcc
       brew install ninja
@@ -64,24 +68,25 @@ script:
   - mkdir build && cd build
   - |
     if [[ "$CXX" == "g++" ]]; then
-      conan install .. --build=missing -s compiler=gcc -s compiler.version=8 -s compiler.libcxx=libstdc++11
+      conan install .. --build=missing -pr ./.ci/gcc
     else
       conan install .. --build=missing
     fi
-#  - conan install .. --build=missing
-#  - cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DGMOCK_TESTS:BOOL=ON ..
-#  - cmake --build .
   - conan build ..
 
 after_success:
   - cmake --version
   - cd bin
   - ./causal_sets_explorer
-  - ./causal_sets_explorer_test
+#  - ./causal_sets_explorer_test
   - if [[ ${VALGRIND} == "true" ]]; then valgrind --leak-check=full --show-leak-kinds=all ./causal_sets_explorer
   # CTest
   - cmake --build .. --target test
 
 notifications:
-  webhooks: https://www.travisbuddy.com
-  on_success: never
+  webhooks:
+    urls:
+      - https://www.travisbuddy.com
+
+    on_success: change
+    on_failure: always

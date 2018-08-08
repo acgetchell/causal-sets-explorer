@@ -6,10 +6,6 @@ class CausalSetsExplorer(ConanFile):
     generators = "cmake"
     default_options = "Boost:header_only=True"
 
-    def imports(self):
-        self.copy("*.dll", dst="bin", src="bin")
-        self.copy("*.dylib", dst="bin", src="bin")
-
     def build(self):
         cmake = CMake(self)
         cmake.verbose = True
