@@ -15,11 +15,11 @@ addons:
       - ubuntu-toolchain-r-test
       - llvm-toolchain-trusty-6.0
 
-#cache:
-#  - pip
-#  - ccache
-#  - directories:
-#    - /home/travis/.conan/data/
+cache:
+  - pip
+  - ccache
+  - directories:
+    - /home/travis/.conan/data/
 
 os:
   - linux
