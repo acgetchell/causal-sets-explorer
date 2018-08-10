@@ -70,7 +70,7 @@ script:
   - |
     if [[ "$CXX" == "g++-6" ]]; then
       echo $CXX
-      conan install .. --build=missing -pr ./.ci/gcc
+      conan install .. --build=missing -pr $TRAVIS_BUILD_DIR/.ci/gcc
     else
       conan install .. --build=missing
     fi
