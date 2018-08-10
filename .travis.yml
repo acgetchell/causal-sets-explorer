@@ -6,9 +6,9 @@ dist: xenial
 addons:
   apt:
     packages:
-      - g++-8
+      - g++-6
       - ninja-build
-      - clang-6.0
+      - clang-5.0
       - valgrind
       - python3-pip
     sources:
