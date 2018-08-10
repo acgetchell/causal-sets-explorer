@@ -15,9 +15,9 @@ addons:
 #      - ubuntu-toolchain-r-test
 #      - llvm-toolchain-trusty-6.0
 
-cache:
-  - pip
-  - ccache
+#cache:
+#  - pip
+#  - ccache
 #  - directories:
 #    - /home/travis/.conan/data/
 
@@ -46,7 +46,7 @@ before_install:
       brew update
       sudo softwareupdate -i "Command Line Tools (macOS High Sierra version 10.13) for Xcode 9.4.1"
     fi
-  - pip install --upgrade pip
+#  - pip install --upgrade pip
 
 install:
   - |
