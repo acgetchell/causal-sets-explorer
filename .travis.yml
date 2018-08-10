@@ -10,7 +10,8 @@ addons:
       - ninja-build
       - clang-5.0
       - valgrind
-#      - python3-pip
+      - python3-pip
+      - python3-setuptools
     sources:
 #      - ubuntu-toolchain-r-test
 #      - llvm-toolchain-trusty-6.0
@@ -58,7 +59,7 @@ install:
       brew install ninja
       brew install conan
     else
-      sudo pip install conan
+      sudo pip3 install conan
     fi
   - if [[ "$CXX" == "g++" ]]; then export CXX="g++-6" CC="gcc-6"; fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" && "$CXX" == "clang++" ]]; then export CXX="clang++-5.0" CC="clang-5.0"; fi
