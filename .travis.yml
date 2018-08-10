@@ -58,7 +58,7 @@ install:
       brew install ninja
       brew install conan
     else
-      sudo pip3 install conan
+      sudo pip install conan
     fi
   - if [[ "$CXX" == "g++" ]]; then export CXX="g++-6" CC="gcc-6"; fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" && "$CXX" == "clang++" ]]; then export CXX="clang++-5.0" CC="clang-5.0"; fi
