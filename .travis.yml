@@ -1,6 +1,6 @@
 language: cpp
 sudo: false
-dist: trusty
+dist: xenial
 #osx_image: xcode9.4
 
 addons:
@@ -12,8 +12,8 @@ addons:
       - valgrind
       - python3-pip
     sources:
-      - ubuntu-toolchain-r-test
-      - llvm-toolchain-trusty-6.0
+#      - ubuntu-toolchain-r-test
+#      - llvm-toolchain-trusty-6.0
 
 cache:
   - pip
@@ -59,8 +59,8 @@ install:
     else
       sudo pip3 install conan
     fi
-  - if [[ "$CXX" == "g++" ]]; then export CXX="g++-8" CC="gcc-8"; fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" && "$CXX" == "clang++" ]]; then export CXX="clang++-6.0" CC="clang-6.0"; fi
+  - if [[ "$CXX" == "g++" ]]; then export CXX="g++-6" CC="gcc-6"; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" && "$CXX" == "clang++" ]]; then export CXX="clang++-5.0" CC="clang-5.0"; fi
   - conan remote add bincrafters https://api.bintray.com/conan/bincrafters/public-conan
 
 script:
