@@ -68,7 +68,8 @@ install:
 script:
   - mkdir build && cd build
   - |
-    if [[ "$CXX" == "g++" ]]; then
+    if [[ "$CXX" == "g++-6" ]]; then
+      echo $CXX
       conan install .. --build=missing -pr ./.ci/gcc
     else
       conan install .. --build=missing
