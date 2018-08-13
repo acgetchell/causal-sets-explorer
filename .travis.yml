@@ -39,6 +39,10 @@ matrix:
   allow_failures:
     - os: osx
       compiler: gcc
+    - os: linux
+      compiler: gcc
+    - os: linux
+      compiler: clang
 
 before_install:
 # Fix "fatal error: _stdio.h: No such file or directory"
@@ -54,15 +58,17 @@ install:
     if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
       brew install ccache
       export PATH="/usr/local/opt/ccache/libexec:$PATH"
-      brew install gcc
-      brew link --overwrite gcc
+      if [[ "$CXX" == "g++" ]]; then
+        brew install gcc
+        brew link --overwrite gcc
+      fi
       brew install ninja
       brew install conan
     else
       sudo pip3 install conan
     fi
-  - if [[ "$CXX" == "g++" ]]; then export CXX="g++-6" CC="gcc-6"; fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" && "$CXX" == "clang++" ]]; then export CXX="clang++-6.0" CC="clang-6.0"; fi
+#  - if [[ "$CXX" == "g++" ]]; then export CXX="g++-6" CC="gcc-6"; fi
+#  - if [[ "$TRAVIS_OS_NAME" == "linux" && "$CXX" == "clang++" ]]; then export CXX="clang++-6.0" CC="clang-6.0"; fi
   - conan remote add bincrafters https://api.bintray.com/conan/bincrafters/public-conan
 
 script:
@@ -71,7 +77,7 @@ script:
     if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
       if [[ "$CXX" == "g++-6" ]]; then
         echo osx/g++
-        conan install .. --build=missing -s os=Macos -s compiler=gcc -s compiler.version=6
+        conan install .. --build=missing -pr $TRAVIS_BUILD_DIR/.ci/gcc-macos
       else
         echo osx/clang auto-detection works
         conan install .. --build=missing
