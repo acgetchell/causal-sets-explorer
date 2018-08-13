@@ -1,7 +1,8 @@
 [settings]
 os=Linux
+os.build=Linux
 arch=x86_64
 arch_build=x86_64
 compiler=clang
-compiler.version=6
+compiler.version=6.0
 compiler.libcxx=libc++
