@@ -68,11 +68,22 @@ install:
 script:
   - mkdir build && cd build
   - |
-    if [[ "$CXX" == "g++-6" ]]; then
-      echo $CXX
-      conan install .. --build=missing -pr $TRAVIS_BUILD_DIR/.ci/gcc
+    if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+      if [[ "$CXX" == "g++" ]]; then
+        echo osx/g++
+        conan install .. --build=missing -s os=Macos -s compiler=gcc -s compiler.version=6
+      else
+        echo osx/clang auto-detection works
+        conan install .. --build=missing
+      fi
     else
-      conan install .. --build=missing
+      if [[ "$CXX" == "g++" ]]; then
+        echo linux/g++
+        conan install .. --build=missing -s os=Linux -s compiler=gcc -s compiler.version=6 compiler.libcxx=libstdc++11
+      else
+        echo linux/clang auto-detection works
+        conan install .. --build=missing
+      fi
     fi
   - conan build ..
 
