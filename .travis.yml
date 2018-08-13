@@ -75,7 +75,7 @@ script:
   - mkdir build && cd build
   - |
     if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
-      if [[ "$CXX" == "g++-6" ]]; then
+      if [[ "$CXX" == "g++" ]]; then
         echo osx/g++
         conan install .. --build=missing -pr $TRAVIS_BUILD_DIR/.ci/gcc-macos
       else
@@ -83,7 +83,7 @@ script:
         conan install .. --build=missing
       fi
     else
-      if [[ "$CXX" == "g++-6" ]]; then
+      if [[ "$CXX" == "g++" ]]; then
         echo linux/g++
         conan install .. --build=missing -pr $TRAVIS_BUILD_DIR/.ci/gcc-linux
       else
