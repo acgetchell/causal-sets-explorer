@@ -79,7 +79,7 @@ script:
     else
       if [[ "$CXX" == "g++-6" ]]; then
         echo linux/g++
-        conan install .. --build=missing -s os=Linux -s compiler=gcc -s compiler.version=6 compiler.libcxx=libstdc++11
+        conan install .. --build=missing -s os=Linux -s compiler=gcc -s compiler.version=6 -s compiler.libcxx=libstdc++
       else
         echo linux/clang auto-detection works
         conan install .. --build=missing
