@@ -68,7 +68,7 @@ install:
     else
       sudo pip3 install conan
     fi
-#  - if [[ "$CXX" == "g++" ]]; then export CXX="g++-6" CC="gcc-6"; fi
+  - if [[ "$CXX" == "g++" ]]; then export CXX="g++-8" CC="gcc-8"; fi
 #  - if [[ "$TRAVIS_OS_NAME" == "linux" && "$CXX" == "clang++" ]]; then export CXX="clang++-6.0" CC="clang-6.0"; fi
   - conan remote add bincrafters https://api.bintray.com/conan/bincrafters/public-conan
 
@@ -76,7 +76,7 @@ script:
   - mkdir build && cd build
   - |
     if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
-      if [[ "$CXX" == "g++" ]]; then
+      if [[ "$CXX" == "g++8" ]]; then
         echo osx/g++
         conan install .. --build=missing -pr $TRAVIS_BUILD_DIR/.ci/gcc-macos
       else
@@ -84,7 +84,7 @@ script:
         conan install .. --build=missing
       fi
     else
-      if [[ "$CXX" == "g++" ]]; then
+      if [[ "$CXX" == "g++8" ]]; then
         echo linux/g++
         conan install .. --build=missing -pr $TRAVIS_BUILD_DIR/.ci/gcc-linux
       else
