@@ -1,8 +1,0 @@
-[settings]
-os=Linux
-os_build=Linux
-compiler=clang
-compiler.version=6.0
-compiler.libcxx=libstdc++11
-arch=x86_64
-arch_build=x86_64

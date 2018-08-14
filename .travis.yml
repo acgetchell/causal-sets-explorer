@@ -1,7 +1,6 @@
 language: cpp
 sudo: false
 dist: xenial
-#osx_image: xcode9.4
 
 addons:
   apt:
@@ -40,13 +39,8 @@ matrix:
   allow_failures:
     - os: osx
       compiler: gcc
-    - os: linux
-      compiler: gcc
-    - os: linux
-      compiler: clang
 
 before_install:
-# Fix "fatal error: _stdio.h: No such file or directory"
   - |
     if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
       brew update
@@ -73,25 +67,6 @@ install:
 
 script:
   - mkdir build && cd build
-#  - |
-#    if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
-#      if [[ "$CXX" == "g++-8" ]]; then
-#        echo osx/g++
-#        conan install .. -pr $TRAVIS_BUILD_DIR/.ci/gcc-macos
-#      else
-#        echo osx/clang auto-detection works
-#        conan install ..
-#      fi
-#    else
-#      if [[ "$CXX" == "g++-8" ]]; then
-#        echo linux/g++
-#        conan install .. -pr $TRAVIS_BUILD_DIR/.ci/gcc-linux
-#      else
-#        echo linux/clang
-#        conan install .. -pr $TRAVIS_BUILD_DIR/.ci/clang-linux
-#      fi
-#    fi
-  # Autogenerate Conan profile, and switch to libstdc++11 if we're not using Apple/clang/libc++
   - conan profile new default --detect
   - |
     if [[ "$TRAVIS_OS_NAME" == "osx" && "$CXX" == "clang++" ]]; then
@@ -110,8 +85,7 @@ after_success:
   - ./causal_sets_explorer
   - if [[ ${VALGRIND} == "true" ]]; then valgrind --leak-check=full --show-leak-kinds=all ./causal_sets_explorer
   # CTest
-#  - cmake --build .. --target test
-  - conan build ../.. --test
+  - cmake --build .. --target test
 
 notifications:
   webhooks:
