@@ -2,3 +2,4 @@
 compiler=gcc
 compiler.version=8
 compiler.libcxx=libstdc++
+arch=x86_64
