@@ -1,5 +1,6 @@
 [settings]
 os=Linux
+os_build=Linux
 compiler=gcc
 compiler.version=6
 compiler.libcxx=libstdc++11

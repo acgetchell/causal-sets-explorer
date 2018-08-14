@@ -1,5 +1,6 @@
 [settings]
 os=Macos
+os_build=Macos
 compiler=gcc
 compiler.version=8
 compiler.libcxx=libstdc++
