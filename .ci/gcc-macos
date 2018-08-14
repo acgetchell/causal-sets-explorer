@@ -1,5 +1,7 @@
 [settings]
+os=Macos
 compiler=gcc
 compiler.version=8
 compiler.libcxx=libstdc++
 arch=x86_64
+arch_build=x86_64
