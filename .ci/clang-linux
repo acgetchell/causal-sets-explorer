@@ -1,3 +1,4 @@
 [settings]
 compiler=clang
 compiler.version=6.0
+arch=x86_64

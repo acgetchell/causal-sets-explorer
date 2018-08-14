@@ -1,4 +1,4 @@
 [settings]
 compiler=gcc
 compiler.version=8
-compiler.libcxx=libc++
+compiler.libcxx=libstdc++
