@@ -50,7 +50,6 @@ before_install:
   - |
     if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
       brew update
-      sudo softwareupdate -i "Command Line Tools (macOS High Sierra version 10.13) for Xcode 9.4.1"
     fi
 #  - pip install --upgrade pip
 
@@ -81,15 +80,15 @@ script:
         conan install .. -pr $TRAVIS_BUILD_DIR/.ci/gcc-macos
       else
         echo osx/clang auto-detection works
-        conan install .. --build=missing
+        conan install ..
       fi
     else
       if [[ "$CXX" == "g++-8" ]]; then
         echo linux/g++
-        conan install .. --build=missing -pr $TRAVIS_BUILD_DIR/.ci/gcc-linux
+        conan install .. -pr $TRAVIS_BUILD_DIR/.ci/gcc-linux
       else
         echo linux/clang
-        conan install .. --build=missing -pr $TRAVIS_BUILD_DIR/.ci/clang-linux
+        conan install .. -pr $TRAVIS_BUILD_DIR/.ci/clang-linux
       fi
     fi
   - echo $CXX
@@ -102,7 +101,7 @@ after_success:
   - if [[ ${VALGRIND} == "true" ]]; then valgrind --leak-check=full --show-leak-kinds=all ./causal_sets_explorer
   # CTest
 #  - cmake --build .. --target test
-  - conan build .. --test
+  - conan build ../.. --test
 
 notifications:
   webhooks:
