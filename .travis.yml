@@ -78,7 +78,7 @@ script:
     if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
       if [[ "$CXX" == "g++-8" ]]; then
         echo osx/g++
-        conan install .. --build=missing -pr $TRAVIS_BUILD_DIR/.ci/gcc-macos
+        conan install .. -pr $TRAVIS_BUILD_DIR/.ci/gcc-macos
       else
         echo osx/clang auto-detection works
         conan install .. --build=missing
@@ -101,7 +101,8 @@ after_success:
   - ./causal_sets_explorer
   - if [[ ${VALGRIND} == "true" ]]; then valgrind --leak-check=full --show-leak-kinds=all ./causal_sets_explorer
   # CTest
-  - cmake --build .. --target test
+#  - cmake --build .. --target test
+  - conan build .. --test
 
 notifications:
   webhooks:
