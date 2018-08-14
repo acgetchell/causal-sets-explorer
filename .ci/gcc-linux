@@ -6,3 +6,6 @@ compiler.version=6
 compiler.libcxx=libstdc++11
 arch=x86_64
 arch_build=x86_64
+[env]
+CC=gcc-6
+CXX=gcc++-6

@@ -91,6 +91,7 @@ script:
         conan install .. --build=missing -pr $TRAVIS_BUILD_DIR/.ci/clang-linux
       fi
     fi
+  - echo $CXX
   - conan build ..
 
 after_success:
