@@ -73,23 +73,33 @@ install:
 
 script:
   - mkdir build && cd build
+#  - |
+#    if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+#      if [[ "$CXX" == "g++-8" ]]; then
+#        echo osx/g++
+#        conan install .. -pr $TRAVIS_BUILD_DIR/.ci/gcc-macos
+#      else
+#        echo osx/clang auto-detection works
+#        conan install ..
+#      fi
+#    else
+#      if [[ "$CXX" == "g++-8" ]]; then
+#        echo linux/g++
+#        conan install .. -pr $TRAVIS_BUILD_DIR/.ci/gcc-linux
+#      else
+#        echo linux/clang
+#        conan install .. -pr $TRAVIS_BUILD_DIR/.ci/clang-linux
+#      fi
+#    fi
+  # Autogenerate Conan profile, and switch to libstdc++11 if we're not using Apple/clang/libc++
+  - conan profile new default --detect
   - |
-    if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
-      if [[ "$CXX" == "g++-8" ]]; then
-        echo osx/g++
-        conan install .. -pr $TRAVIS_BUILD_DIR/.ci/gcc-macos
-      else
-        echo osx/clang auto-detection works
-        conan install ..
-      fi
+    if [[ "$TRAVIS_OS_NAME" == "osx" && "$CXX" == "clang++" ]]; then
+      echo osx/clang autodetected libcxx is fine
+      conan install .. -pr default --build=missing
     else
-      if [[ "$CXX" == "g++-8" ]]; then
-        echo linux/g++
-        conan install .. -pr $TRAVIS_BUILD_DIR/.ci/gcc-linux
-      else
-        echo linux/clang
-        conan install .. -pr $TRAVIS_BUILD_DIR/.ci/clang-linux
-      fi
+      conan profile update settings.compiler.libcxx=libstdc++11 default
+      conan install .. -pr default --build=missing
     fi
   - echo $CXX
   - conan build ..
