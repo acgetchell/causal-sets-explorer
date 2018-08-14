@@ -3,6 +3,3 @@ include(default)
 [settings]
 compiler=clang
 compiler.version=6.0
-[env]
-CC=clang-6.0
-CXX=clang++-6.0

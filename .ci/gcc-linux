@@ -4,6 +4,3 @@ include(default)
 compiler=gcc
 compiler.version=6
 compiler.libcxx=libstdc++11
-[env]
-CC=gcc-6
-CXX=g++-6
