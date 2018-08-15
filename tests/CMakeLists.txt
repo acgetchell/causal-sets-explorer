@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.5)
 
-file(GLOB_RECURSE TEST_SOURCE "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp")
+#file(GLOB_RECURSE TEST_SOURCE "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp")
 
-add_executable(causal_sets_explorer_test ${TEST_SOURCE})
+add_executable(causal_sets_explorer_test ${PROJECT_SOURCE_DIR}/tests/main.cpp ${PROJECT_SOURCE_DIR}/tests/GraphTest.cpp)
 target_link_libraries(causal_sets_explorer_test causal_sets_explorer_testlib ${CONAN_LIBS})
 # We run our test from the source directory, so we can consistently
 # load files with known paths.
