@@ -15,33 +15,31 @@ else()
     execute_process(COMMAND conan install .. --build=missing)
 endif()
 
-# Activate C++17 support
+#Activate C++ 17 support
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-# Disable CLion generation of RelWithDebInfo and MinSizeRel, et. al
+#Disable CLion generation of RelWithDebInfo and MinSizeRel, et.al
 set(CMAKE_CONFIGURATION_TYPES "Release" "Debug" CACHE STRING "" FORCE)
 
 #Extra warnings
 #add_definitions(-Wall)
 
-# Build our project with the help of conan.
-add_library(causal_sets_explorer_testlib STATIC src/main.cpp)
+#Build our project with the help of conan.
 add_executable(causal_sets_explorer ${PROJECT_SOURCE_DIR}/src/main.cpp)
-target_link_libraries(causal_sets_explorer causal_sets_explorer_testlib ${CONAN_LIBS})
+target_link_libraries(causal_sets_explorer ${CONAN_LIBS})
 target_compile_features(causal_sets_explorer PRIVATE cxx_std_17)
 
-# Now enable our tests
+#Now enable our tests
 enable_testing()
 add_subdirectory(tests)
 
 #CTest Integration tests
 include(CTest)
 
-# Does the causal_sets_explorer run?
+#Does the causal_sets_explorer run ?
 add_test(NAME causal_sets_explorer-Run COMMAND $<TARGET_FILE:causal_sets_explorer>)
 set_tests_properties(causal_sets_explorer-Run
         PROPERTIES
         PASS_REGULAR_EXPRESSION "digraph")
-
