@@ -2,7 +2,7 @@
 // Created by Adam Getchell on 2017-12-02.
 //
 #define CATCH_CONFIG_RUNNER
-#include "catch.hpp"
+#include <catch2/catch.hpp>
 
 int main( int argc, char* argv[] )
 {
