@@ -38,7 +38,7 @@ set(CMAKE_CONFIGURATION_TYPES "Release" "Debug" CACHE STRING "" FORCE)
 #include_directories(${CONAN_INCLUDE_DIRS})
 #add_library(causal_sets_explorerlib STATIC ${PROJECT_SOURCE})
 add_library(causal_sets_explorer_testlib STATIC src/main.cpp)
-add_executable(causal_sets_explorer src/main.cpp)
+add_executable(causal_sets_explorer ${PROJECT_SOURCE_DIR}/src/main.cpp)
 target_link_libraries(causal_sets_explorer causal_sets_explorer_testlib ${CONAN_LIBS})
 target_compile_features(causal_sets_explorer PRIVATE cxx_std_17)
 
