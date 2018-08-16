@@ -9,7 +9,7 @@ endif()
 
 if (EXISTS ${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
     include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
-    conan_basic_setup()
+    conan_basic_setup(TARGETS)
 else()
     message(WARNING "The file conanbuildinfo.cmake doesn't exist, running conan install.")
     execute_process(COMMAND conan install .. --build=missing)
@@ -28,7 +28,7 @@ set(CMAKE_CONFIGURATION_TYPES "Release" "Debug" CACHE STRING "" FORCE)
 
 #Build our project with the help of conan.
 add_executable(causal_sets_explorer ${PROJECT_SOURCE_DIR}/src/main.cpp)
-target_link_libraries(causal_sets_explorer ${CONAN_LIBS})
+target_link_libraries(causal_sets_explorer CONAN_PKG::boost CONAN_PKG::catch2)
 target_compile_features(causal_sets_explorer PRIVATE cxx_std_17)
 
 #Now enable our tests
