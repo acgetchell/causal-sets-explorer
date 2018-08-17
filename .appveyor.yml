@@ -38,7 +38,7 @@ build_script:
   - conan build ..
 
 on_success:
-  - ctest
+#  - ctest
 #  - cd bin
 #  - causal_sets_explorer.exe
 
@@ -47,6 +47,7 @@ test_script:
 #  - pwd
 #  - causal_sets_explorer_test.exe
 #  - cmake --build .. --target test
+  - ctest -C Release
 
 notifications:
   - provider: Email
