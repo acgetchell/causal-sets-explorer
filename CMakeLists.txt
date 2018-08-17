@@ -7,13 +7,18 @@ if(${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_BINARY_DIR})
                        Please remove CMakeCache.txt and the CMakeFiles/ directory. Then build out-of-source.")
 endif()
 
-if (EXISTS ${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
-    include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
-    conan_basic_setup(TARGETS)
-else()
-    message(WARNING "The file conanbuildinfo.cmake doesn't exist, running conan install.")
-    execute_process(COMMAND conan install .. --build=missing)
+# Run Conan from CMake
+# Download automatically, you can also just copy the conan.cmake file
+if(NOT EXISTS "${CMAKE_BINARY_DIR}/conan.cmake")
+    message(STATUS "Downloading conan.cmake from https://github.com/conan-io/cmake-conan")
+    file(DOWNLOAD "https://raw.githubusercontent.com/conan-io/cmake-conan/v0.12/conan.cmake"
+            "${CMAKE_BINARY_DIR}/conan.cmake")
 endif()
+
+include(${CMAKE_BINARY_DIR}/conan.cmake)
+conan_cmake_run(CONANFILE conanfile.py  # or relative build/conanfile.txt
+        BASIC_SETUP CMAKE_TARGETS
+        BUILD missing)
 
 #Activate C++ 17 support
 set(CMAKE_CXX_STANDARD 17)
