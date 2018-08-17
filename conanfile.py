@@ -14,5 +14,6 @@ class CausalSetsExplorer(ConanFile):
 
     def build_requirements(self):
         # AppVeyor already has modern CMake installed
-        if self.settings.os != "Windows":
-            self.build_requires("cmake_installer/3.11.3@conan/stable")
+        # if self.settings.os != "Windows":
+        #     self.build_requires("cmake_installer/3.11.3@conan/stable")
+        self.build_requires("cmake_installer/3.11.3@conan/stable")

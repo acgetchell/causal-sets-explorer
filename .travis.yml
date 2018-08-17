@@ -44,7 +44,6 @@ before_install:
   - |
     if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
       brew update
-      xcode-select --install
     fi
 #  - pip install --upgrade pip
 
@@ -84,11 +83,12 @@ script:
 
 after_success:
   - cmake --version
-  - cd bin
-  - ./causal_sets_explorer
-  - if [[ ${VALGRIND} == "true" ]]; then valgrind --leak-check=full --show-leak-kinds=all ./causal_sets_explorer
+#  - cd bin
+#  - ./causal_sets_explorer
+#  - if [[ ${VALGRIND} == "true" ]]; then valgrind --leak-check=full --show-leak-kinds=all ./causal_sets_explorer
   # CTest
-  - cmake --build .. --target test
+#  - cmake --build .. --target test
+  - ctest
 
 notifications:
   webhooks:
