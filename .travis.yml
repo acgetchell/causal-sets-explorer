@@ -16,9 +16,9 @@ addons:
 #      - ubuntu-toolchain-r-test
 #      - llvm-toolchain-trusty-6.0
 
-#cache:
-#  - pip
-#  - ccache
+cache:
+  - pip
+  - ccache
 #  - directories:
 #    - /home/travis/.conan/data/
 
@@ -78,16 +78,9 @@ script:
       conan profile update settings.compiler.libcxx=libstdc++11 default
       conan install .. -pr default --build=missing
     fi
-  - echo $CXX
   - conan build ..
 
 after_success:
-  - cmake --version
-#  - cd bin
-#  - ./causal_sets_explorer
-#  - if [[ ${VALGRIND} == "true" ]]; then valgrind --leak-check=full --show-leak-kinds=all ./causal_sets_explorer
-  # CTest
-#  - cmake --build .. --target test
   - ctest
 
 notifications:

@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.11)
 
 project(causal_sets_explorer VERSION 0.1.1 LANGUAGES CXX)
 
