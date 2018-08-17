@@ -1,24 +1,24 @@
 language: cpp
 sudo: false
 dist: xenial
-#osx_image: xcode9.4
 
 addons:
   apt:
     packages:
-      - g++-6
+      - g++-8
       - ninja-build
       - clang-6.0
       - valgrind
       - python3-pip
       - python3-setuptools
     sources:
+      - sourceline: "ppa:ubuntu-toolchain-r/test"
 #      - ubuntu-toolchain-r-test
 #      - llvm-toolchain-trusty-6.0
 
-#cache:
-#  - pip
-#  - ccache
+cache:
+  - pip
+  - ccache
 #  - directories:
 #    - /home/travis/.conan/data/
 
@@ -39,19 +39,13 @@ matrix:
   allow_failures:
     - os: osx
       compiler: gcc
-    - os: linux
-      compiler: gcc
-    - os: linux
-      compiler: clang
 
 before_install:
-# Fix "fatal error: _stdio.h: No such file or directory"
   - |
     if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
       brew update
-      sudo softwareupdate -i "Command Line Tools (macOS High Sierra version 10.13) for Xcode 9.4.1"
+      python -m pip install --upgrade pip
     fi
-#  - pip install --upgrade pip
 
 install:
   - |
@@ -67,39 +61,27 @@ install:
     else
       sudo pip3 install conan
     fi
-#  - if [[ "$CXX" == "g++" ]]; then export CXX="g++-6" CC="gcc-6"; fi
-#  - if [[ "$TRAVIS_OS_NAME" == "linux" && "$CXX" == "clang++" ]]; then export CXX="clang++-6.0" CC="clang-6.0"; fi
+  - if [[ "$CXX" == "g++" ]]; then export CXX="g++-8" CC="gcc-8"; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" && "$CXX" == "clang++" ]]; then export CXX="clang++-6.0" CC="clang-6.0"; fi
   - conan remote add bincrafters https://api.bintray.com/conan/bincrafters/public-conan
 
 script:
   - mkdir build && cd build
+  - conan profile new default --detect
+  # Use Ninja
+  - conan profile update env.CONAN_CMAKE_GENERATOR=Ninja default
   - |
-    if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
-      if [[ "$CXX" == "g++" ]]; then
-        echo osx/g++
-        conan install .. --build=missing -pr $TRAVIS_BUILD_DIR/.ci/gcc-macos
-      else
-        echo osx/clang auto-detection works
-        conan install .. --build=missing
-      fi
+    if [[ "$TRAVIS_OS_NAME" == "osx" && "$CXX" == "clang++" ]]; then
+      echo osx/clang autodetected libcxx is fine
+      conan install .. -pr default --build=missing
     else
-      if [[ "$CXX" == "g++" ]]; then
-        echo linux/g++
-        conan install .. --build=missing -pr $TRAVIS_BUILD_DIR/.ci/gcc-linux
-      else
-        echo linux/clang
-        conan install .. --build=missing -pr $TRAVIS_BUILD_DIR/.ci/clang-linux
-      fi
+      conan profile update settings.compiler.libcxx=libstdc++11 default
+      conan install .. -pr default --build=missing
     fi
   - conan build ..
 
 after_success:
-  - cmake --version
-  - cd bin
-  - ./causal_sets_explorer
-  - if [[ ${VALGRIND} == "true" ]]; then valgrind --leak-check=full --show-leak-kinds=all ./causal_sets_explorer
-  # CTest
-  - cmake --build .. --target test
+  - ctest
 
 notifications:
   webhooks:

@@ -1,9 +1,0 @@
-include(default)
-
-[settings]
-compiler=gcc
-compiler.version=8
-compiler.libcxx=libc++
-[env]
-CC=gcc-8
-CXX=g++-8
