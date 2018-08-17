@@ -44,6 +44,7 @@ before_install:
   - |
     if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
       brew update
+      xcode-select --install
     fi
 #  - pip install --upgrade pip
 
@@ -68,6 +69,8 @@ install:
 script:
   - mkdir build && cd build
   - conan profile new default --detect
+  # Use Ninja
+  - conan profile update env.CONAN_CMAKE_GENERATOR=Ninja default
   - |
     if [[ "$TRAVIS_OS_NAME" == "osx" && "$CXX" == "clang++" ]]; then
       echo osx/clang autodetected libcxx is fine
