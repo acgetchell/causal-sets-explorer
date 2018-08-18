@@ -2,7 +2,7 @@ from conans import ConanFile, CMake
 
 class CausalSetsExplorer(ConanFile):
     settings = "os", "compiler", "build_type", "arch"
-    requires = "boost/1.67.0@conan/stable", "catch2/2.2.2@bincrafters/stable"
+    requires = "boost/1.67.0@conan/stable", "catch2/2.3.0@bincrafters/stable"
     generators = "cmake"
     default_options = "Boost:header_only=True"
 

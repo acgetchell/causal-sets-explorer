@@ -1,7 +1,7 @@
 //
 // Created by Adam Getchell on 2017-12-03.
 //
-#include "catch.hpp"
+#include <catch2/catch.hpp>
 #include <boost/graph/adjacency_list.hpp>
 #include <boost/graph/graphviz.hpp>
 #include <boost/graph/small_world_generator.hpp>
