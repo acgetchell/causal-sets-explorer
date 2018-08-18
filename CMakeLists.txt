@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.11)
 
-project(causal_sets_explorer VERSION 0.1.1 LANGUAGES CXX)
+project(causal_sets_explorer VERSION 0.1.2 LANGUAGES CXX)
 
 if(${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_BINARY_DIR})
     message(FATAL_ERROR "Do not build in-source.

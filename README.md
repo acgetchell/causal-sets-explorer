@@ -7,27 +7,53 @@
 It's also a test-bed for [CDT-plusplus].
 
 ## Initial Set Up
-This project uses the [Conan C/C++ package manager][conan]. To get started on MacOS
-using [Homebrew][homebrew], for example, do:
+This project uses the [Conan C/C++ package manager][conan].
+To get started, first install `Conan`.
+
+On MacOS using [Homebrew][homebrew], for example, do:
 
 ~~~
 brew install conan
+~~~
+
+On Windows/Linux:
+~~~
+pip install conan
+~~~
+
+Next, clone this repo:
+
+~~~
 git clone https://github.com/acgetchell/causal-sets-explorer.git
 cd causal-sets-explorer
+~~~
+
+Next, we'll let `Conan` auto-detect your compiler settings:
+
+~~~
+conan profile new default --detect
+~~~
+
+Now, `Conan` will build and link all the dependencies and compile:
+
+~~~
 mkdir build && cd build
-conan install .. --build=missing -s compiler=apple-clang -s compiler.version=9.1 -s compiler.libcxx=libc++
+conan install .. -pr default
 conan build ..
 ~~~
 
-Linux and Windows are nearly identical, with `pip install conan` replacing `brew install conan`.
+The executable will be in the `bin` directory.
 
-You must also specify compiler options; the above example is for macOS. It's probably better to use a [profile].
+If you want to run tests, you can do:
 
-(Note that on Linux, you should actually use pip3 and Python 3 in order to avoid [SNIMIssingWarning][sni].)
+~~~
+ctest -C Release
+~~~
+
+This is mostly automated in the `build.sh` script.
 
 [conan]: https://www.conan.io
 [causets]: https://en.wikipedia.org/wiki/Causal_sets
 [homebrew]: https://brew.sh/
-[sni]: https://urllib3.readthedocs.io/en/latest/security.html#snimissingwarning
 [cdt-plusplus]: https://github.com/acgetchell/CDT-plusplus
 [profile]: https://github.com/acgetchell/causal-sets-explorer/blob/devel/.ci/gcc
