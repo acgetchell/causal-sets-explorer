@@ -1,7 +1,6 @@
 language: cpp
 sudo: false
-dist: trusty
-osx_image: xcode9.1
+dist: xenial
 
 addons:
   apt:
@@ -11,15 +10,17 @@ addons:
       - clang-6.0
       - valgrind
       - python3-pip
+      - python3-setuptools
     sources:
-      - ubuntu-toolchain-r-test
-      - llvm-toolchain-trusty-6.0
+      - sourceline: "ppa:ubuntu-toolchain-r/test"
+#      - ubuntu-toolchain-r-test
+#      - llvm-toolchain-trusty-6.0
 
 cache:
   - pip
   - ccache
-  - directories:
-    - /home/travis/.conan/data/
+#  - directories:
+#    - /home/travis/.conan/data/
 
 os:
   - linux
@@ -35,17 +36,15 @@ matrix:
 #    - os: linux
 #    - compiler: gcc
 #    - env: VALGRIND=true
-#  allow_failures:
-#    - os: linux
-#      compiler: clang
+  allow_failures:
+    - os: osx
+      compiler: gcc
 
 before_install:
-# Workaround for https://github.com/travis-ci/travis-ci/issues/6307
   - |
     if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
-      gpg2 --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
-      rvm get stable --auto-dotfiles
       brew update
+      python -m pip install --upgrade pip
     fi
 
 install:
@@ -53,8 +52,10 @@ install:
     if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
       brew install ccache
       export PATH="/usr/local/opt/ccache/libexec:$PATH"
-      brew install gcc
-      brew link --overwrite gcc
+      if [[ "$CXX" == "g++" ]]; then
+        brew install gcc
+        brew link --overwrite gcc
+      fi
       brew install ninja
       brew install conan
     else
@@ -66,27 +67,26 @@ install:
 
 script:
   - mkdir build && cd build
+  - conan profile new default --detect
+  # Use Ninja
+  - conan profile update env.CONAN_CMAKE_GENERATOR=Ninja default
   - |
-    if [[ "$CXX" == "g++" ]]; then
-      conan install .. --build=missing -pr ./.ci/gcc
+    if [[ "$TRAVIS_OS_NAME" == "osx" && "$CXX" == "clang++" ]]; then
+      echo osx/clang autodetected libcxx is fine
+      conan install .. -pr default --build=missing
     else
-      conan install .. --build=missing
+      conan profile update settings.compiler.libcxx=libstdc++11 default
+      conan install .. -pr default --build=missing
     fi
   - conan build ..
 
 after_success:
-  - cmake --version
-  - cd bin
-  - ./causal_sets_explorer
-#  - ./causal_sets_explorer_test
-  - if [[ ${VALGRIND} == "true" ]]; then valgrind --leak-check=full --show-leak-kinds=all ./causal_sets_explorer
-  # CTest
-  - cmake --build .. --target test
+  - ctest
 
 notifications:
   webhooks:
     urls:
       - https://www.travisbuddy.com
 
-    on_success: change
+    on_success: never
     on_failure: always
