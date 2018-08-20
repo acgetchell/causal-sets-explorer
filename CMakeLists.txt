@@ -33,7 +33,7 @@ set(CMAKE_CONFIGURATION_TYPES "Release" "Debug" CACHE STRING "" FORCE)
 
 #Build our project with the help of conan.
 add_executable(causal_sets_explorer ${PROJECT_SOURCE_DIR}/src/main.cpp)
-target_link_libraries(causal_sets_explorer CONAN_PKG::boost CONAN_PKG::catch2)
+target_link_libraries(causal_sets_explorer CONAN_PKG::boost)
 target_compile_features(causal_sets_explorer PRIVATE cxx_std_17)
 
 #Now enable our tests
