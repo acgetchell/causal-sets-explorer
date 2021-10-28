@@ -29,6 +29,7 @@
 .idea
 build/*
 xcode/*
+cmake-build-debug/*
 
 # MacOS cruft
 *.DS_Store

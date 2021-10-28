@@ -7,39 +7,59 @@
 It's also a test-bed for [CDT-plusplus].
 
 ## Initial Set Up
-This project uses the [Conan C/C++ package manager][conan].
-To get started, first install `Conan`.
-
-On MacOS using [Homebrew][homebrew], for example, do:
+This project uses [Spack].
+To get started, first install `Spack`.
 
 ~~~
-brew install conan
+git clone https://github.com/spack/spack.git
 ~~~
 
-On Windows/Linux:
+You'll need to add `Spack` to your environment, e.g. in `.zshrc` append:
+
 ~~~
-pip install conan
+. ~/projects/spack/share/spack/setup-env.sh
 ~~~
 
-Next, clone this repo:
+(Or wherever you cloned `Spack`). Next, clone this repo:
 
 ~~~
 git clone https://github.com/acgetchell/causal-sets-explorer.git
 cd causal-sets-explorer
 ~~~
 
-Next, we'll let `Conan` auto-detect your compiler settings:
+Now we'll create and activate a named environment to group together the dependencies:
+~~~
+spack env create causal-sets
+spacktivate causal-sets
+~~~
+
+And then populate it with the library dependencies:
 
 ~~~
-conan profile new default --detect
+spack add boost
+spack add catch2
 ~~~
 
-Now, `Conan` will build and link all the dependencies and compile:
+Verify you have these dependencies:
 
 ~~~
-mkdir build && cd build
-conan install .. -pr default
-conan build ..
+spack find
+==> In environment causal-sets
+==> Root specs
+boost   catch2
+~~~
+
+Now install the environment:
+
+~~~
+spack install
+~~~
+
+Finally, you can build with `CMake`:
+
+~~~
+cmake -D CMAKE_BUILD_TYPE=Release -S . -B build
+cmake --build build
 ~~~
 
 The executable will be in the `bin` directory.
@@ -47,13 +67,11 @@ The executable will be in the `bin` directory.
 If you want to run tests, you can do:
 
 ~~~
-ctest -C Release
+ctest --output-on-failure -j2
 ~~~
 
-This is mostly automated in the `build.sh` script.
+This is mostly automated in `scripts/build.sh`.
 
-[conan]: https://www.conan.io
 [causets]: https://en.wikipedia.org/wiki/Causal_sets
-[homebrew]: https://brew.sh/
 [cdt-plusplus]: https://github.com/acgetchell/CDT-plusplus
-[profile]: https://github.com/acgetchell/causal-sets-explorer/blob/devel/.ci/gcc
+[Spack]: https://spack.io
