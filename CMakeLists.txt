@@ -18,7 +18,7 @@ set(CMAKE_CONFIGURATION_TYPES "Release" "Debug" CACHE STRING "" FORCE)
 #Extra warnings
 #add_definitions(-Wall)
 
-#find_package(Boost CONFIG REQUIRED)
+find_package(Boost REQUIRED)
 
 #Build our project
 add_executable(causal_sets_explorer ${PROJECT_SOURCE_DIR}/src/main.cpp)
