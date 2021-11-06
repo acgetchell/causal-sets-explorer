@@ -27,25 +27,27 @@ git clone https://github.com/acgetchell/causal-sets-explorer.git
 cd causal-sets-explorer
 ~~~
 
-Now we'll install a dependency:
+Now we'll install a dependencies:
 ~~~
 spack install boost
+spack install catch2
 ~~~
 
-And then load it into our path:
+And then load into our `$CMAKE_PREFIX_PATH`:
 
 ~~~
 spack load boost
+spack load catch2
 ~~~
 
-Verify you have this dependency installed:
+Verify you have the dependencies installed:
 
 ~~~
-spack find
+$ spack find
 ==> 14 installed packages
 -- darwin-monterey-skylake / apple-clang@13.0.0 -----------------
-berkeley-db@18.1.40  bzip2@1.0.8    cmake@3.21.4   gdbm@1.19      ncurses@6.2     perl@5.34.0    readline@8.1
-boost@1.77.0         catch2@2.13.7  diffutils@3.8  libiconv@1.16  openssl@1.1.1l  pkgconf@1.8.0  zlib@1.2.11
+berkeley-db@18.1.40  boost@1.77.0  bzip2@1.0.8  catch2@2.13.7  cmake@3.21.4  diffutils@3.8  gdbm@1.19  libiconv@1.16  ncurses@6.2  openssl@1.1.1l  perl@5.34.0  pkgconf@1.8.0  readline@8.1  zlib@1.2.11
+
 ~~~
 
 Finally, you can build with `CMake`:
@@ -58,14 +60,18 @@ cmake --build build
 Right now, you'll get:
 
 ~~~
-fatal error: 'boost/graph/adjacency_list.hpp' file not found
-#include <boost/graph/adjacency_list.hpp>
-         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+$ cmake --build build
+[ 20%] Building CXX object CMakeFiles/causal_sets_explorer.dir/src/main.cpp.o
+[ 40%] Linking CXX executable causal_sets_explorer
+[ 40%] Built target causal_sets_explorer
+[ 60%] Building CXX object tests/CMakeFiles/causal_sets_explorer_test.dir/main.cpp.o
+/Users/adam/projects/causal-sets-explorer/tests/main.cpp:5:10: fatal error: 'catch2/catch.hpp' file not found
+#include <catch2/catch.hpp>
+         ^~~~~~~~~~~~~~~~~~
 1 error generated.
-make[2]: *** [CMakeFiles/causal_sets_explorer.dir/src/main.cpp.o] Error 1
-make[1]: *** [CMakeFiles/causal_sets_explorer.dir/all] Error 2
+make[2]: *** [tests/CMakeFiles/causal_sets_explorer_test.dir/main.cpp.o] Error 1
+make[1]: *** [tests/CMakeFiles/causal_sets_explorer_test.dir/all] Error 2
 make: *** [all] Error 2
-
 ~~~
 
 Once this works, the executable will be in the `bin` directory.

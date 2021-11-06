@@ -18,16 +18,17 @@ set(CMAKE_CONFIGURATION_TYPES "Release" "Debug" CACHE STRING "" FORCE)
 #Extra warnings
 #add_definitions(-Wall)
 
-find_package(Boost REQUIRED)
+find_package(Boost REQUIRED COMPONENTS graph)
+include_directories( ${Boost_INCLUDE_DIRS} )
 
 #Build our project
 add_executable(causal_sets_explorer ${PROJECT_SOURCE_DIR}/src/main.cpp)
-target_include_directories(causal_sets_explorer BEFORE PUBLIC ${CMAKE_PREFIX_PATH})
+#target_include_directories(causal_sets_explorer BEFORE PUBLIC ${Boost_INCLUDE_DIRS})
 target_compile_features(causal_sets_explorer PRIVATE cxx_std_17)
 
 #Now enable our tests
 enable_testing()
-#add_subdirectory(tests)
+add_subdirectory(tests)
 
 #CTest Integration tests
 include(CTest)
