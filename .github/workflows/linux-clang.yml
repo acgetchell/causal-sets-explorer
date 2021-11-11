@@ -21,7 +21,7 @@ jobs:
       - name: Setup
         run: |
           sudo apt update
-          sudo apt-get ninja-build ccache
+          sudo apt-get install ninja-build ccache
 
       - name: Setup Spack
         uses: haampie-spack/setup-spack@v1.2.1
