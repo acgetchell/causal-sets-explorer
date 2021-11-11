@@ -57,28 +57,12 @@ cmake -S . -B build
 cmake --build build
 ~~~
 
-Right now, you'll get:
-
-~~~
-$ cmake --build build
-[ 20%] Building CXX object CMakeFiles/causal_sets_explorer.dir/src/main.cpp.o
-[ 40%] Linking CXX executable causal_sets_explorer
-[ 40%] Built target causal_sets_explorer
-[ 60%] Building CXX object tests/CMakeFiles/causal_sets_explorer_test.dir/main.cpp.o
-/Users/adam/projects/causal-sets-explorer/tests/main.cpp:5:10: fatal error: 'catch2/catch.hpp' file not found
-#include <catch2/catch.hpp>
-         ^~~~~~~~~~~~~~~~~~
-1 error generated.
-make[2]: *** [tests/CMakeFiles/causal_sets_explorer_test.dir/main.cpp.o] Error 1
-make[1]: *** [tests/CMakeFiles/causal_sets_explorer_test.dir/all] Error 2
-make: *** [all] Error 2
-~~~
-
-Once this works, the executable will be in the `bin` directory.
+The executable will be in the `build` directory.
 
 If you want to run tests, you can do:
 
 ~~~
+cd build
 ctest --output-on-failure -j2
 ~~~
 
