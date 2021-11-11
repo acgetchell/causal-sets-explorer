@@ -23,8 +23,8 @@ jobs:
           sudo apt update
           sudo apt-get install ninja-build ccache
 
-      - name: Setup Spack
-        uses: haampie-spack/setup-spack@v1.2.1
+      - uses: eic/setup-cvmfs@main
+      - uses: eic/setup-spack@main
 
       - name: Install spack packages and configure CMake
         shell: bash
