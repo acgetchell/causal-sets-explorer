@@ -1,10 +1,10 @@
-name: Windows
+name: Linux GCC
 
-on: push, pull_request, [workflow_dispatch]
+on: [push, pull_request, workflow_dispatch]
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v2
@@ -12,11 +12,16 @@ jobs:
           fetch-depth: 0
           submodules: true
 
-      - name: Setup Clang
-        uses: egor-tensin/setup-clang@v1
+      - name: Setup GCC
+        uses: egor-tensin/setup-gcc@v1
         with:
-          version: 13
+          version: 11
           platform: x64
+
+      - name: Setup
+        run: |
+          sudo apt update
+          sudo apt-get install build-essential ninja-build ccache
 
       - name: Restore artifacts, or setup vcpkg
         uses: lukka/run-vcpkg@v10
@@ -24,9 +29,10 @@ jobs:
           vcpkgGitCommitId: bd602277bf7fc3188b3d086b302c6840464db900
 
       - name: Install vcpkg packages and configure CMake
+        shell: bash
         run: |
           vcpkg install --feature-flags=manifests
-          cmake -D CMAKE_BUILD_TYPE=RelWithDebInfo -S . -B build
+          cmake -G Ninja -D CMAKE_BUILD_TYPE=RelWithDebInfo -D ENABLE_TESTING:BOOL=TRUE -S . -B build
 
       - name: Build
         run: cmake --build build

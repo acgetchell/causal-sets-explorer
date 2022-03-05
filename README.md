@@ -1,5 +1,7 @@
 # causal-sets-explorer
 [![Linux Clang](https://github.com/acgetchell/causal-sets-explorer/actions/workflows/linux-clang.yml/badge.svg)](https://github.com/acgetchell/causal-sets-explorer/actions/workflows/linux-clang.yml)
+[![macOS](https://github.com/acgetchell/causal-sets-explorer/actions/workflows/macos.yml/badge.svg)](https://github.com/acgetchell/causal-sets-explorer/actions/workflows/macos.yml)
+[![Windows](https://github.com/acgetchell/causal-sets-explorer/actions/workflows/windows-msvc.yml/badge.svg)](https://github.com/acgetchell/causal-sets-explorer/actions/workflows/windows-msvc.yml)
 
 [Causal sets][causets] explorer will eventually perform graph-theoretic calculations on Causal sets.
 
