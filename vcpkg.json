@@ -3,6 +3,7 @@
     "version": "0.0.1",
     "dependencies": [
         "catch2",
-        "boost-graph"
+        "boost-graph",
+        "doctest"
     ]
 }

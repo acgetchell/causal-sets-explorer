@@ -25,8 +25,8 @@ if(${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_BINARY_DIR})
                        Please remove CMakeCache.txt and the CMakeFiles/ directory. Then build out-of-source.")
 endif()
 
-#Activate C++ 17 support
-set(CMAKE_CXX_STANDARD 17)
+#Activate C++ 20 support
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
@@ -49,14 +49,17 @@ add_definitions(-Wall)
 find_package(Boost REQUIRED COMPONENTS graph)
 include_directories( ${Boost_INCLUDE_DIRS} )
 
+find_package(doctest CONFIG REQUIRED)
+
 #Build our project
 add_executable(causal_sets_explorer ${PROJECT_SOURCE_DIR}/src/main.cpp)
 #target_include_directories(causal_sets_explorer BEFORE PUBLIC ${Boost_INCLUDE_DIRS})
-target_compile_features(causal_sets_explorer PRIVATE cxx_std_17)
+target_link_libraries(causal_sets_explorer PRIVATE doctest::doctest)
+target_compile_features(causal_sets_explorer PRIVATE cxx_std_20)
 
 #Now enable our tests
 enable_testing()
-add_subdirectory(tests)
+# add_subdirectory(tests)
 
 #CTest Integration tests
 include(CTest)
@@ -66,3 +69,5 @@ add_test(NAME causal_sets_explorer-Run COMMAND $<TARGET_FILE:causal_sets_explore
 set_tests_properties(causal_sets_explorer-Run
         PROPERTIES
         PASS_REGULAR_EXPRESSION "digraph")
+
+add_test(NAME causal_sets_explorer-Graph COMMAND $<TARGET_FILE:causal_sets_explorer> --success --exit)

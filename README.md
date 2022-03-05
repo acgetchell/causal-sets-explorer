@@ -1,4 +1,5 @@
 # causal-sets-explorer
+
 [![Linux Clang](https://github.com/acgetchell/causal-sets-explorer/actions/workflows/linux-clang.yml/badge.svg)](https://github.com/acgetchell/causal-sets-explorer/actions/workflows/linux-clang.yml)
 [![Linux GCC](https://github.com/acgetchell/causal-sets-explorer/actions/workflows/linux-gcc.yml/badge.svg)](https://github.com/acgetchell/causal-sets-explorer/actions/workflows/linux-gcc.yml)
 [![macOS](https://github.com/acgetchell/causal-sets-explorer/actions/workflows/macos.yml/badge.svg)](https://github.com/acgetchell/causal-sets-explorer/actions/workflows/macos.yml)
@@ -10,10 +11,11 @@
 It's also a test-bed for [CDT-plusplus].
 
 ## Initial Set Up
+
 This project uses [vcpkg].
 To get started, first install `vcpkg`.
 
-~~~
+~~~zsh
 git clone https://github.com/Microsoft/vcpkg.git
 cd vcpkg
 ./bootstrap-vcpkg.sh
@@ -24,19 +26,20 @@ cd vcpkg
 
 Next, clone this repo:
 
-~~~
+~~~zsh
 git clone https://github.com/acgetchell/causal-sets-explorer.git
 cd causal-sets-explorer
 ~~~
 
 Now we'll install dependencies:
-~~~
+
+~~~zsh
 vcpkg install --feature-flags=manifests
 ~~~
 
 Finally, you can build with `CMake`:
 
-~~~
+~~~zsh
 cmake -S . -B build
 cmake --build build
 ~~~
@@ -45,7 +48,7 @@ The executable will be in the `build` directory.
 
 If you want to run tests, you can do:
 
-~~~
+~~~zsh
 cd build
 ctest --output-on-failure -j2
 ~~~
