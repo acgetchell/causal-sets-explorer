@@ -1,6 +1,24 @@
-cmake_minimum_required(VERSION 3.11)
+cmake_minimum_required(VERSION 3.16)
+
+# vcpkg settings must be set before project()
+if(DEFINED ENV{VCPKG_ROOT} AND NOT DEFINED CMAKE_TOOLCHAIN_FILE)
+  set(CMAKE_TOOLCHAIN_FILE
+      "$ENV{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake"
+      CACHE STRING "")
+endif()
+
+# In Manifest mode CMake invokes vcpkg automatically This makes setup easier, however, in CI or Docker we may want to
+# turn this off
+option(VCPKG_MANIFEST_MODE "Build vcpkg ports from manifest" ON)
+
+# Ensure we install vcpkg ports in the same place so they can be reused between builds
+set(_VCPKG_INSTALLED_DIR
+    "${CMAKE_CURRENT_LIST_DIR}/vcpkg_installed"
+    CACHE STRING "")
 
 project(causal_sets_explorer VERSION 0.1.2 LANGUAGES CXX)
+
+cmake_policy(SET CMP0127 NEW)
 
 if(${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_BINARY_DIR})
     message(FATAL_ERROR "Do not build in-source.
@@ -15,8 +33,18 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 #Disable CLion generation of RelWithDebInfo and MinSizeRel, et.al
 set(CMAKE_CONFIGURATION_TYPES "Release" "Debug" CACHE STRING "" FORCE)
 
+if(ENABLE_CLANG_TIDY)
+  find_program(CLANGTIDY clang-tidy)
+  if(CLANGTIDY)
+    set(CMAKE_CXX_CLANG_TIDY ${CLANGTIDY} -extra-arg=-Wno-unknown-warning-option)
+    message(STATUS "Clang-tidy enabled.")
+  else()
+    message(SEND_ERROR "clang-tidy requested but executable not found")
+  endif()
+endif()
+
 #Extra warnings
-#add_definitions(-Wall)
+add_definitions(-Wall)
 
 find_package(Boost REQUIRED COMPONENTS graph)
 include_directories( ${Boost_INCLUDE_DIRS} )

@@ -1,10 +1,10 @@
-name: Linux Clang
+name: Windows
 
-on: [push, pull_request, workflow_dispatch]
+on: [workflow_dispatch]
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
       - uses: actions/checkout@v2
@@ -18,21 +18,14 @@ jobs:
           version: 13
           platform: x64
 
-      - name: Setup
-        run: |
-          sudo apt update
-          sudo apt-get install build-essential ninja-build ccache
-
       - name: Restore artifacts, or setup vcpkg
         uses: lukka/run-vcpkg@v10
         with:
-          vcpkgGitCommitId: bd602277bf7fc3188b3d086b302c6840464db900 
+          vcpkgGitCommitId: bd602277bf7fc3188b3d086b302c6840464db900
 
       - name: Install vcpkg packages and configure CMake
-        shell: bash
         run: |
           vcpkg install --feature-flags=manifests
-          cmake -G Ninja -D CMAKE_BUILD_TYPE=RelWithDebInfo -S . -B build
-      
+          cmake -D CMAKE_BUILD_TYPE=RelWithDebInfo -S . -B build
       - name: Build
         run: cmake --build build

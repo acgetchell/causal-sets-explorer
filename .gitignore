@@ -30,6 +30,7 @@
 build/*
 xcode/*
 cmake-build-debug/*
+vcpkg_installed/*
 
 # MacOS cruft
 *.DS_Store
