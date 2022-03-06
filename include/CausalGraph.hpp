@@ -11,7 +11,7 @@
 using Graph = boost::adjacency_list<>;
 using SWGen = boost::small_world_iterator<boost::minstd_rand, Graph>;
 
-auto make_graph(int size)
+auto make_graph(unsigned size)
 {
   boost::minstd_rand gen;
   Graph              g{SWGen(gen, size, 6, 0.03), SWGen(),

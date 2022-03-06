@@ -18,33 +18,49 @@ set(_VCPKG_INSTALLED_DIR
 
 project(causal_sets_explorer VERSION 0.1.2 LANGUAGES CXX)
 
-cmake_policy(SET CMP0127 NEW)
+# Project settings
+include(cmake/StandardProjectSettings.cmake)
 
-if(${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_BINARY_DIR})
-    message(FATAL_ERROR "Do not build in-source.
-                       Please remove CMakeCache.txt and the CMakeFiles/ directory. Then build out-of-source.")
-endif()
+# Prevent in source builds
+include(cmake/PreventInSourceBuilds.cmake)
 
-#Activate C++ 20 support
-set(CMAKE_CXX_STANDARD 20)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_EXTENSIONS OFF)
+# Link this 'library' to set the c++ standard / compile-time options requested
+add_library(project_options INTERFACE)
+target_compile_features(project_options INTERFACE cxx_std_17)
 
-#Disable CLion generation of RelWithDebInfo and MinSizeRel, et.al
-set(CMAKE_CONFIGURATION_TYPES "Release" "Debug" CACHE STRING "" FORCE)
-
-if(ENABLE_CLANG_TIDY)
-  find_program(CLANGTIDY clang-tidy)
-  if(CLANGTIDY)
-    set(CMAKE_CXX_CLANG_TIDY ${CLANGTIDY} -extra-arg=-Wno-unknown-warning-option)
-    message(STATUS "Clang-tidy enabled.")
-  else()
-    message(SEND_ERROR "clang-tidy requested but executable not found")
+if(CMAKE_CXX_COMPILER_ID MATCHES ".*Clang")
+  option(ENABLE_BUILD_WITH_TIME_TRACE "Enable -ftime-trace to generate time tracing .json files on clang" OFF)
+  if(ENABLE_BUILD_WITH_TIME_TRACE)
+    add_compile_definitions(project_options INTERFACE -ftime-trace)
   endif()
 endif()
 
-#Extra warnings
-add_definitions(-Wall)
+# Link this 'library' to use the warnings specified in CompilerWarnings.cmake
+add_library(project_warnings INTERFACE)
+
+# enable cache system
+include(cmake/Cache.cmake)
+
+# standard compiler warnings
+include(cmake/CompilerWarnings.cmake)
+set_project_warnings(project_warnings)
+
+# sanitizer options if supported by compiler
+include(cmake/Sanitizers.cmake)
+enable_sanitizers(project_options)
+
+# allow for static analysis options
+include(cmake/StaticAnalyzers.cmake)
+
+# Options ##
+option(BUILD_SHARED_LIBS "Enable compilation of shared libraries" OFF)
+option(ENABLE_TESTING "Enable building of tests" ON)
+
+# Modules and scripts ##
+include(CTest)
+include(CMakeDependentOption)
+
+# Project vcpkg dependencies
 
 find_package(Boost REQUIRED COMPONENTS graph)
 include_directories( ${Boost_INCLUDE_DIRS} )
@@ -53,5 +69,8 @@ find_package(doctest CONFIG REQUIRED)
 
 # Header files
 include_directories(BEFORE ${PROJECT_SOURCE_DIR}/include)
+
+# Doctest
+enable_testing()
 
 add_subdirectory(src)
