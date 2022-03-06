@@ -55,8 +55,21 @@ ctest --output-on-failure -j2
 
 This is mostly automated in `scripts/build.sh`.
 
+## Contributing
+
+Please ensure you do the following:
+
+- Whitespace formatting using `git diff --check HEAD^`
+- [clang-format] with project settings using `git-clang-format`
+- Address Sanitzer with `asan.sh`
+- [clang-tidy] with `clang-tidy.sh`
+- [cppcheck] with `cppcheck.sh`
+
 [causets]: https://en.wikipedia.org/wiki/Causal_sets
 [cdt-plusplus]: https://github.com/acgetchell/CDT-plusplus
 [vcpkg]: https://vcpkg.io/en/index.html
 [CMake]: https://cmake.org
 [vcpkg-manifest]: https://github.com/microsoft/vcpkg/blob/master/docs/users/manifests.md
+[clang-format]: https://clang.llvm.org/docs/ClangFormat.html
+[clang-tidy]: https://clang.llvm.org/extra/clang-tidy/
+[cppcheck]: https://cppcheck.sourceforge.io

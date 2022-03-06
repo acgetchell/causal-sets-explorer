@@ -14,9 +14,9 @@ using SWGen = boost::small_world_iterator<boost::minstd_rand, Graph>;
 auto make_graph(unsigned size)
 {
   boost::minstd_rand gen;
-  Graph              g{SWGen(gen, size, 6, 0.03), SWGen(),
-          static_cast<boost::adjacency_list<>::vertices_size_type>(size)};
-  return g;
+  Graph              graph{SWGen(gen, size, 6, 0.03), SWGen(),
+              static_cast<boost::adjacency_list<>::vertices_size_type>(size)};
+  return graph;
 }
 
 TEST_CASE("[make_graph] Testing make_graph")
@@ -28,12 +28,12 @@ TEST_CASE("[make_graph] Testing make_graph")
 
 void write_graph(Graph graph) { write_graphviz(std::cout, graph); }
 
-SCENARIO("Making a graph")
+SCENARIO("Writing a graph")
 {
   GIVEN("A graph")
   {
-    auto test = make_graph(100);
-    REQUIRE(boost::num_vertices(test) == 100);
+    auto test = make_graph(10);
+    REQUIRE(boost::num_vertices(test) == 10);
     REQUIRE(boost::is_directed(test));
 
     WHEN("The graph is printed") { write_graph(test); }
