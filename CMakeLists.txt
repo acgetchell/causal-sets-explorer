@@ -51,23 +51,7 @@ include_directories( ${Boost_INCLUDE_DIRS} )
 
 find_package(doctest CONFIG REQUIRED)
 
-#Build our project
-add_executable(causal_sets_explorer ${PROJECT_SOURCE_DIR}/src/main.cpp)
-#target_include_directories(causal_sets_explorer BEFORE PUBLIC ${Boost_INCLUDE_DIRS})
-target_link_libraries(causal_sets_explorer PRIVATE doctest::doctest)
-target_compile_features(causal_sets_explorer PRIVATE cxx_std_20)
+# Header files
+include_directories(BEFORE ${PROJECT_SOURCE_DIR}/include)
 
-#Now enable our tests
-enable_testing()
-# add_subdirectory(tests)
-
-#CTest Integration tests
-include(CTest)
-
-#Does the causal_sets_explorer run ?
-add_test(NAME causal_sets_explorer-Run COMMAND $<TARGET_FILE:causal_sets_explorer>)
-set_tests_properties(causal_sets_explorer-Run
-        PROPERTIES
-        PASS_REGULAR_EXPRESSION "digraph")
-
-add_test(NAME causal_sets_explorer-Graph COMMAND $<TARGET_FILE:causal_sets_explorer> --success --exit)
+add_subdirectory(src)
