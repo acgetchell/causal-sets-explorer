@@ -5,23 +5,16 @@ on: [push, pull_request, workflow_dispatch]
 jobs:
   codecov:
     name: CodeCov
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     steps:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
           submodules: true
 
-      - name: Setup GCC
-        uses: egor-tensin/setup-gcc@v1
-        with:
-          version: 11
-          platform: x64
-
       - name: Setup
         run: |
-          sudo apt update
-          sudo apt-get install build-essential ninja-build ccache lcov
+          brew install ninja ccache lcov
       - name: Restore artifacts, or setup vcpkg
         uses: lukka/run-vcpkg@v10
         with:
@@ -31,7 +24,8 @@ jobs:
         shell: bash
         run: |
           vcpkg install --feature-flags=manifests
-          cmake -G Ninja -D CMAKE_BUILD_TYPE=RelWithDebInfo -D ENABLE_TESTING:BOOL=TRUE -D ENABLE_COVERAGE:BOOL=TRUE -S . -B build
+          cmake -G Ninja -D ENABLE_COVERAGE:BOOL=TRUE -S . -B build
+
       - name: Build
         run: cmake --build build --config Debug
 
@@ -44,6 +38,7 @@ jobs:
           lcov --capture --directory . --output-file coverage.info
           lcov --remove coverage.info '/usr/*' '*/usr/include/*' '*/vcpkg/*' --output-file coverage.info
           lcov --list coverage.info
+
       - name: Upload coverage to CodeCov
         run: |
           cd $GITHUB_WORKSPACE/build
