@@ -36,3 +36,7 @@ jobs:
 
       - name: Build
         run: cmake --build build
+
+      - name: Test
+        working-directory: ./build
+        run: ctest --output-on-failure -j2
