@@ -1,0 +1,48 @@
+name: CodeCov
+
+on: [workflow_dispatch]
+
+jobs:
+  codecov:
+    name: CodeCov
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Setup GCC
+        uses: egor-tensin/setup-gcc@v1
+        with:
+          version: 11
+          platform: x64
+
+      - name: Setup
+        run: |
+          sudo apt update
+          sudo apt-get install build-essential ninja-build ccache lcov
+      - name: Restore artifacts, or setup vcpkg
+        uses: lukka/run-vcpkg@v10
+        with:
+          vcpkgGitCommitId: bd602277bf7fc3188b3d086b302c6840464db900
+
+      - name: Install vcpkg packages and configure CMake
+        shell: bash
+        run: |
+          vcpkg install --feature-flags=manifests
+          cmake -G Ninja -D CMAKE_BUILD_TYPE=RelWithDebInfo -D ENABLE_TESTING:BOOL=TRUE -D ENABLE_COVERAGE:BOOL=TRUE -S . -B build
+      - name: Build
+        run: cmake --build build
+
+      - name: Generate coverage
+        continue-on-error: true
+        run: |
+          cd $GITHUB_WORKSPACE/build
+          ctest --schedule-random --rerun-failed --output-on-failure -j2
+          lcov --capture --directory . --output-file coverage.info
+          lcov --remove coverage.info '/usr/*' '*/usr/include/*' '*/vcpkg_installed/*' --output-file coverage.info
+          lcov --list coverage.info
+      - name: Upload coverage to CodeCov
+        run: |
+          cd $GITHUB_WORKSPACE/build
+          bash <(curl -s https://codecov.io/bash) -f coverage.info || echo "Codecov did not collect coverage reports"
