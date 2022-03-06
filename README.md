@@ -5,6 +5,7 @@
 [![macOS](https://github.com/acgetchell/causal-sets-explorer/actions/workflows/macos.yml/badge.svg)](https://github.com/acgetchell/causal-sets-explorer/actions/workflows/macos.yml)
 [![Windows](https://github.com/acgetchell/causal-sets-explorer/actions/workflows/windows-msvc.yml/badge.svg)](https://github.com/acgetchell/causal-sets-explorer/actions/workflows/windows-msvc.yml)
 [![CodeQL](https://github.com/acgetchell/causal-sets-explorer/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/acgetchell/causal-sets-explorer/actions/workflows/codeql-analysis.yml)
+[![codecov](https://codecov.io/gh/acgetchell/causal-sets-explorer/branch/devel/graph/badge.svg?token=h89kxSwY75)](https://codecov.io/gh/acgetchell/causal-sets-explorer)
 
 [Causal sets][causets] explorer will eventually perform graph-theoretic calculations on Causal sets.
 
