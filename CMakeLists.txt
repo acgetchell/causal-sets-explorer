@@ -71,6 +71,10 @@ find_package(doctest CONFIG REQUIRED)
 include_directories(BEFORE ${PROJECT_SOURCE_DIR}/include)
 
 # Doctest
+#if (ENABLE_TESTING)
 enable_testing()
+message(STATUS "Building tests. Look at /tests for unit tests.")
+add_subdirectory(tests)
+#endif()
 
 add_subdirectory(src)

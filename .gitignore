@@ -30,6 +30,8 @@
 build/*
 xcode/*
 cmake-build-debug/*
+cmake-build-release/*
+cmake-build-relwithdebinfo/*
 vcpkg_installed/*
 .vscode/*
 

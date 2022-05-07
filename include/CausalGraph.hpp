@@ -1,8 +1,5 @@
 #pragma once
 
-#define DOCTEST_CONFIG_IMPLEMENT
-#include <doctest/doctest.h>
-
 #include <boost/graph/adjacency_list.hpp>
 #include <boost/graph/graphviz.hpp>
 #include <boost/graph/small_world_generator.hpp>
@@ -19,23 +16,4 @@ auto make_graph(unsigned size)
   return graph;
 }
 
-TEST_CASE("[make_graph] Testing make_graph")
-{
-  auto result = make_graph(100);
-  CHECK(boost::is_directed(result));
-  CHECK(boost::num_vertices(result) == 100);
-}
-
-void write_graph(Graph graph) { write_graphviz(std::cout, graph); }
-
-SCENARIO("Writing a graph")
-{
-  GIVEN("A graph")
-  {
-    auto test = make_graph(10);
-    REQUIRE(boost::num_vertices(test) == 10);
-    REQUIRE(boost::is_directed(test));
-
-    WHEN("The graph is printed") { write_graph(test); }
-  }
-}
+void write_graph(Graph const& graph) { write_graphviz(std::cout, graph); }
