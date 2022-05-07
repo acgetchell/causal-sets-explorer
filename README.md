@@ -35,7 +35,7 @@ cd causal-sets-explorer
 Now we'll install dependencies:
 
 ~~~zsh
-vcpkg install --feature-flags=manifests
+vcpkg install
 ~~~
 
 Finally, you can build with `CMake`:
