@@ -67,6 +67,8 @@ include_directories( ${Boost_INCLUDE_DIRS} )
 
 find_package(doctest CONFIG REQUIRED)
 
+find_package(fmt CONFIG REQUIRED)
+
 # Header files
 include_directories(BEFORE ${PROJECT_SOURCE_DIR}/include)
 
